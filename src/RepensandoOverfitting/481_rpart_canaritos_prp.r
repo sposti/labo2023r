@@ -7,10 +7,14 @@ require("data.table")
 require("rpart")
 require("rpart.plot")
 
-setwd("~/buckets/b1/") # establezco la carpeta donde voy a trabajar
+#setwd("~/buckets/b1/") # establezco la carpeta donde voy a trabajar
+
+setwd("C:/SP/Austral/2023/Labo 1/Desktop/Salida de Bayessian/")
 
 # cargo el dataset
-dataset <- fread("./datasets/dataset_pequeno.csv")
+#dataset <- fread("./datasets/dataset_pequeno.csv")
+
+dataset <- fread("C:/SP/Austral/2023/Labo 1/datasets/dataset_pequeno.csv")
 
 dir.create("./exp/", showWarnings = FALSE)
 dir.create("./exp/EA4810/", showWarnings = FALSE)

@@ -95,10 +95,10 @@ dataset <- dataset[clase_ternaria != ""]
 # creo la carpeta donde va el experimento
 # HT  representa  Hiperparameter Tuning
 #dir.create("./exp/", showWarnings = FALSE)
-dir.create("~/Desktop/salida/", showWarnings = FALSE, recursive = TRUE)
+#dir.create("~/Desktop/salida/", showWarnings = FALSE, recursive = TRUE)
 #dir.create("./exp/HT2020/", showWarnings = FALSE)
 #archivo_salida <- "./exp/HT2020/gridsearch.txt"
-archivo_salida <- "~/Desktop/salida/salidaSP.txt"
+archivo_salida <- "~/Desktop/salidaSP2.txt"
 
 # Escribo los titulos al archivo donde van a quedar los resultados
 # atencion que si ya existe el archivo, esta instruccion LO SOBREESCRIBE, y lo que estaba antes se pierde

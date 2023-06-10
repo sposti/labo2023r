@@ -179,10 +179,13 @@ EstimarGanancia <- function(x) {
 # Aqui empieza el programa
 
 # Establezco el Working Directory
-setwd("~/buckets/b1/")
+setwd("C:/SP/Austral/2023/Labo 1/Desktop/Salida de Bayessian/")
 
 # cargo los datos
-dataset <- fread("./datasets/dataset_pequeno.csv")
+
+#dataset <- fread("./datasets/dataset_pequeno.csv")
+dataset <- fread("C:/SP/Austral/2023/Labo 1/datasets/dataset_pequeno.csv")
+
 # trabajo solo con los datos con clase, es decir 202107
 dataset <- dataset[clase_ternaria != ""]
 
