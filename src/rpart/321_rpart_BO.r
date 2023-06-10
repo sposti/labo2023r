@@ -30,7 +30,7 @@ hs <- makeParamSet(
 )
 # minbuket NO PUEDE ser mayor que la mitad de minsplit
 
-ksemilla_azar <- 102191 # cambiar por la primer semilla
+ksemilla_azar <- 666667 # cambiar por la primer semilla
 
 #------------------------------------------------------------------------------
 # graba a un archivo los componentes de lista
@@ -135,7 +135,7 @@ ArbolesCrossValidation <- function(data, param, qfolds, pagrupa, semilla) {
     seq(qfolds), # 1 2 3 4 5
     MoreArgs = list(data, param),
     SIMPLIFY = FALSE,
-    mc.cores = qfolds
+    mc.cores = 1
   )
 
   data[, fold := NULL]
