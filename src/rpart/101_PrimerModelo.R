@@ -18,9 +18,9 @@ dtrain <- dataset[foto_mes == 202107] # defino donde voy a entrenar
 dapply <- dataset[foto_mes == 202109] # defino donde voy a aplicar el modelo
 
 cp0 = -1
-minsplit0 = 2546
-minbucket0 = 1184
-maxdepth0 = 17
+minsplit0 = 2222
+minbucket0 = 989
+maxdepth0 = 6
   
 # genero el modelo,  aqui se construye el arbol
 modelo <- rpart(
@@ -59,7 +59,7 @@ dapply[, Predicted := as.numeric(prob_baja2 > 1 / 40)]
 dir.create("./exp/")
 dir.create("./exp/KA2001")
 
-archivo <- paste0("cp",gsub("\\.", "dot", gsub("-", "minus", as.character(cp))),"mb", as.character(minbucket0), "ms",as.character(minsplit0), "mxd", as.character(maxdepth0))
+archivo <- paste0("cp",gsub("\\.", "dot", gsub("-", "minus", as.character(cp0))),"mb", as.character(minbucket0), "ms",as.character(minsplit0), "mxd", as.character(maxdepth0))
 
 fwrite(dapply[, list(numero_de_cliente, Predicted)], # solo los campos para Kaggle
         file = paste0("./exp/KA2001/", archivo, ".csv"),

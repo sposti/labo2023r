@@ -34,10 +34,10 @@ modelo <- rpart(
     data = dataset[foto_mes == 202107, ],
     model = TRUE,
     xval = 0,
-    cp = -0.82,
-    minsplit = 769,
-    minbucket = 8,
-    maxdepth = 6
+    cp = -1,
+    minsplit = 3008,
+    minbucket = 1504,
+    maxdepth = 5
 )
 
 

@@ -21,7 +21,7 @@ setwd("./exp/EA4870")
 
 
 # uso esta semilla para los canaritos
-set.seed(666667)
+set.seed(666707)
 
 # agrego tantos canaritos como variables tiene el dataset
 for (i in 1:ncol(dataset)) {
