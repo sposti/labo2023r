@@ -19,9 +19,9 @@ PARAM$semilla <- 102191
 # parameetros rpart
 PARAM$rpart_param <- list(
   "cp" = -1,
-  "minsplit" = 300,
-  "minbucket" = 20,
-  "maxdepth" = 10
+  "minsplit" = 1365,
+  "minbucket" = 666,
+  "maxdepth" = 8
 )
 
 # parametros  arbol
@@ -29,22 +29,24 @@ PARAM$rpart_param <- list(
 PARAM$feature_fraction <- 0.5
 # voy a generar 500 arboles, a mas arboles mas tiempo de proceso y MEJOR MODELO,
 # pero ganancias marginales
-PARAM$num_trees_max <- 500
+PARAM$num_trees_max <- 100
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
 # Aqui comienza el programa
 
-setwd("~/buckets/b1/") # Establezco el Working Directory
+#setwd("~/buckets/b1/") # Establezco el Working Directory
+
+setwd("C:/SP/Austral/2023/Labo 1/datasets/") 
 
 # cargo los datos
-dataset <- fread("./datasets/dataset_pequeno.csv")
+dataset <- fread("./dataset_pequeno.csv")
 
 
 # creo la carpeta donde va el experimento
 dir.create("./exp/", showWarnings = FALSE)
-carpeta_experimento <- paste0("./exp/KA", PARAM$experimento, "/")
-dir.create(paste0("./exp/KA", PARAM$experimento, "/"),
+carpeta_experimento <- paste0("./exp/SPKA", PARAM$experimento, "/")
+dir.create(paste0("./exp/SPKA", PARAM$experimento, "/"),
   showWarnings = FALSE
 )
 
@@ -52,7 +54,7 @@ setwd(carpeta_experimento)
 
 
 # que tamanos de ensemble grabo a disco, pero siempre debo generar los 500
-grabar <- c(1, 5, 10, 50, 100, 200, 500)
+grabar <- c(1, 5, 10, 50, 100)#, 200, 500)
 
 
 # defino los dataset de entrenamiento y aplicacion
