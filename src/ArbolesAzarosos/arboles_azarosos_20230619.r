@@ -11,17 +11,17 @@ require("rpart")
 
 # parmatros experimento
 PARAM <- list()
-PARAM$experimento <- 6666
+PARAM$experimento <- 1667072
 
 # Establezco la semilla aleatoria, cambiar por SU primer semilla
-PARAM$semilla <- 666707
+PARAM$semilla <- 166707
 
 # parameetros rpart
 PARAM$rpart_param <- list(
   "cp" = -1,
   "minsplit" = 1365,
   "minbucket" = 666,
-  "maxdepth" = 8
+  "maxdepth" = 10
 )
 
 # parametros  arbol
@@ -29,7 +29,7 @@ PARAM$rpart_param <- list(
 PARAM$feature_fraction <- 0.5
 # voy a generar 500 arboles, a mas arboles mas tiempo de proceso y MEJOR MODELO,
 # pero ganancias marginales
-PARAM$num_trees_max <- 166
+PARAM$num_trees_max <- 1665
 
 #------------------------------------------------------------------------------
 #------------------------------------------------------------------------------
@@ -45,8 +45,8 @@ dataset <- fread("./dataset_pequeno.csv")
 
 # creo la carpeta donde va el experimento
 dir.create("./exp/", showWarnings = FALSE)
-carpeta_experimento <- paste0("./exp/SPKA", PARAM$experimento, "/")
-dir.create(paste0("./exp/SPKA", PARAM$experimento, "/"),
+carpeta_experimento <- paste0("./exp/SPKA_II", PARAM$experimento, "/")
+dir.create(paste0("./exp/SPKA_II", PARAM$experimento, "/"),
   showWarnings = FALSE
 )
 
@@ -54,7 +54,7 @@ setwd(carpeta_experimento)
 
 
 # que tamanos de ensemble grabo a disco, pero siempre debo generar los 500
-grabar <- c(1, 5, 10, 50, 100)#, 200, 500)
+grabar <- c(1, 5, 10, 50, 100, 200, 300, 400, 500)
 
 
 # defino los dataset de entrenamiento y aplicacion
