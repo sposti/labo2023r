@@ -305,7 +305,9 @@ for (modelo_rank in PARAM$modelos_rank) {
     vganancias_suavizadas <- c(vganancias_suavizadas, ganancia_suavizada_max)
 
     ymax <- max(tb_ganancias, na.rm = TRUE)
-    ymin <- min(tb_ganancias[envios >= PARAM$graficar$envios_desde, ],
+
+    campos_ganancias <- setdiff(colnames(tb_ganancias), "envios")
+    ymin <- min(tb_ganancias[envios >= PARAM$graficar$envios_desde, campos_ganancias, with=FALSE ],
       na.rm = TRUE
     )
 
