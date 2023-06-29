@@ -128,7 +128,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset[, vmr_mconsumototal := vm_mconsumototal / vm_mlimitecompra]
   dataset[, vmr_mpagominimo := vm_mpagominimo / vm_mlimitecompra]
 
-  # Aqui debe usted agregar sus propias nuevas variables -SP
+  # Aqui debe usted agregar sus propias nuevas variables -SP2
   
   dataset[, c_deb_aut := rowSums(cbind(ccuenta_debitos_automaticos, ctarjeta_visa_debitos_automaticos, ctarjeta_master_debitos_automaticos), na.rm = TRUE)] #campo debitos autmaticos
   dataset[, m_deb_aut := rowSums(cbind(mcuenta_debitos_automaticos, mtarjeta_visa_debitos_automaticos, mtarjeta_master_debitos_automaticos), na.rm = TRUE)] #campo debitos autmaticos
