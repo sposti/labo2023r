@@ -1,4 +1,4 @@
-# Experimentos Colaborativos Default
+# Experimentos Colaborativos Default #sp
 # Hyperparameter Tuning  lightgbm
 
 # pensado para datasets con UNDERSAPLING de la clase mayoritaria
@@ -34,7 +34,7 @@ PARAM$exp_input <- "TS6410"
 # En caso que se haga cross validation, se usa esta cantidad de folds
 PARAM$lgb_crossvalidation_folds <- 5
 
-PARAM$lgb_semilla <- 102191 # cambiar por su propia semilla
+PARAM$lgb_semilla <- 666667 # cambiar por su propia semilla
 
 
 # Hiperparametros FIJOS de  lightgbm
@@ -657,3 +657,5 @@ cat(format(Sys.time(), "%Y%m%d %H%M%S"), "\n",
   file = "zRend.txt",
   append = TRUE
 )
+
+##sp ok
