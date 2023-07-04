@@ -132,7 +132,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   
   dataset[, vmr_pagominimo_saldo := rowSums(cbind(vm_mpagominimo / vm_msaldototal), na.rm = TRUE)] #ratio utilizacion TC
   dataset[, c_deb_aut := rowSums(cbind(ccuenta_debitos_automaticos, ctarjeta_visa_debitos_automaticos, ctarjeta_master_debitos_automaticos), na.rm = TRUE)] #campo debitos autmaticos
-  dataset[, m_deb_aut := rowSums(cbind(mcuenta_debitos_automaticos, mtarjeta_visa_debitos_automaticos, mtarjeta_master_debitos_automaticos), na.rm = TRUE)] #campo debitos autmaticos
+  dataset[, m_deb_aut := rowSums(cbind(mcuenta_debitos_automaticos, mttarjeta_visa_debitos_automaticos, mttarjeta_master_debitos_automaticos), na.rm = TRUE)] #campo debitos autmaticos
   dataset[, c_pagos := rowSums(cbind(cpagodeservicios, cpagomiscuentas), na.rm = TRUE)] #campo pagos no automaticos voluntarios cantidad
   dataset[, m_pagos := rowSums(cbind(mpagodeservicios, mpagomiscuentas), na.rm = TRUE)] #campo pagos no automaticos voluntarios  monto
   dataset[, c_seguros := rowSums(cbind(cseguro_vida, cseguro_auto, cseguro_vivienda, cseguro_accidentes_personales), na.rm = TRUE)] #campo pagos no automaticos voluntarios  monto
@@ -152,7 +152,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset[, atm_ratio_c := rowSums(cbind(ifelse((catm_trx + catm_trx_other) == 0, 0, catm_trx / (catm_trx + catm_trx_other))), na.rm = TRUE)] #
   dataset[, atm_ratio_eme := rowSums(cbind(ifelse((matm + matm_other) == 0, 0, matm / (matm + matm_other))), na.rm = TRUE)] #
   dataset[, c_e_sp := rowSums(cbind(ctarjeta_debito_transacciones, ctarjeta_visa_transacciones, ctarjeta_master_transacciones, cpagodeservicios, ctransferencias_emitidas, cextraccion_autoservicio, ccheques_emitidos, ccheques_depositados_rechazados, ccheques_emitidos_rechazados, ccajas_extracciones, ccomisiones_otras), na.rm = TRUE)] #
-  dataset[, m_e_sp := rowSums(cbind(mtarjeta_visa_consumo, mtarjeta_master_consumo, mcuenta_debitos_automaticos, mtarjeta_visa_debitos_automaticos, mttarjeta_master_debitos_automaticos, mpagodeservicios, mpagomiscuentas, mcomisiones_mantenimiento, mcomisiones_otras, mtransferencias_emitidas, mextraccion_autoservicio, mcheques_emitidos, mcheques_depositados_rechazados, mcheques_emitidos_rechazados), na.rm = TRUE)] #
+  dataset[, m_e_sp := rowSums(cbind(mtarjeta_visa_consumo, mtarjeta_master_consumo, mcuenta_debitos_automaticos, mttarjeta_visa_debitos_automaticos, mttarjeta_master_debitos_automaticos, mpagodeservicios, mpagomiscuentas, mcomisiones_mantenimiento, mcomisiones_otras, mtransferencias_emitidas, mextraccion_autoservicio, mcheques_emitidos, mcheques_depositados_rechazados, mcheques_emitidos_rechazados), na.rm = TRUE)] #
   dataset[, c_y_sp := rowSums(cbind(cpayroll_trx, cpayroll2_trx, ctransferencias_recibidas, ccheques_depositados, ccajas_depositos), na.rm = TRUE)] #
   dataset[, m_y_sp := rowSums(cbind(mpayroll, mpayroll2, mtransferencias_recibidas, mcheques_depositados), na.rm = TRUE)] #
   dataset[, c_p_sp := rowSums(cbind(ccajeros_propios_descuentos, ctarjeta_visa_descuentos, ctarjeta_master_descuentos), na.rm = TRUE)] #
