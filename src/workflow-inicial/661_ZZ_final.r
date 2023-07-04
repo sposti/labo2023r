@@ -1,4 +1,4 @@
-# Experimentos Colaborativos Default
+# Experimentos Colaborativos Default  SP
 
 # Workflow  ZZ proceso final con semillas
 # Este nuevo script fue desarrolado para ayudar a los alumnos en la realizacion
@@ -43,7 +43,7 @@ PARAM$exp_input <- "HT6510"
 PARAM$modelos_rank <- c(1)
 
 # reemplazar por las propias semillas
-PARAM$semillas <- c(102191, 200177, 410551, 552581, 892237)
+PARAM$semillas <- c(666667, 666671, 666683, 666697, 666707)
 
 PARAM$kaggle$envios_desde <- 9500L
 PARAM$kaggle$envios_hasta <- 11500L
@@ -392,3 +392,4 @@ cat(format(Sys.time(), "%Y%m%d %H%M%S"), "\n",
   file = "zRend.txt",
   append = TRUE
 )
+#ok sp
