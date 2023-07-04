@@ -22,7 +22,7 @@ PARAM$experimento <- "FE6310"
 PARAM$exp_input <- "DR6210"
 
 PARAM$lag1 <- TRUE
-PARAM$lag2 <- TRUE
+PARAM$lag2 <- FALSE
 PARAM$lag3 <- FALSE
 
 PARAM$Tendencias1$run <- TRUE
@@ -45,19 +45,19 @@ PARAM$Tendencias2$ratiomax <- FALSE
 
 
 PARAM$RandomForest$run <- TRUE
-PARAM$RandomForest$num.trees <- 20
-PARAM$RandomForest$max.depth <- 4
-PARAM$RandomForest$min.node.size <- 1000
+PARAM$RandomForest$num.trees <- 50
+PARAM$RandomForest$max.depth <- 3
+PARAM$RandomForest$min.node.size <- 500
 PARAM$RandomForest$mtry <- 40
-PARAM$RandomForest$semilla <- 102191 # cambiar por la propia semilla
+PARAM$RandomForest$semilla <- 666667 # cambiar por la propia semilla
 
 
 # varia de 0.0 a 2.0, si es 0.0 NO se activan
-PARAM$CanaritosAsesinos$ratio <- 0.0
+PARAM$CanaritosAsesinos$ratio <- 0.42
 # desvios estandar de la media, para el cutoff
-PARAM$CanaritosAsesinos$desvios <- 4.0
+PARAM$CanaritosAsesinos$desvios <- 2.5
 # cambiar por la propia semilla
-PARAM$CanaritosAsesinos$semilla <- 200177
+PARAM$CanaritosAsesinos$semilla <- 666667
 
 PARAM$home <- "~/buckets/b1/"
 # FIN Parametros del script
@@ -341,8 +341,8 @@ fganancia_lgbm_meseta <- function(probs, datos) {
 GVEZ <- 1
 
 CanaritosAsesinos <- function(
-    canaritos_ratio = 0.2,
-    canaritos_desvios = 3.0, canaritos_semilla = 999983) {
+    canaritos_ratio = 0.42,
+    canaritos_desvios = 2.5, canaritos_semilla = 666667) {
   gc()
   dataset[, clase01 := ifelse(clase_ternaria == "CONTINUA", 0, 1)]
 
@@ -660,3 +660,5 @@ cat(format(Sys.time(), "%Y%m%d %H%M%S"), "\n",
   file = "zRend.txt",
   append = TRUE
 )
+
+##ok sp
