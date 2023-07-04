@@ -130,7 +130,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   
   # Aqui debe usted agregar sus propias nuevas variables -SP2
   
-  dataset[, vmr_pagominimo_saldo := rowSums(cbind(vm_mpagominimo / vm_msaldototal), na.rm = TRUE)] #ratio utilizacion TC
+  dataset[, vmr_pagominimo_saldo := rowSums(cbind(ifelse(vm_msaldototal == 0, 0, vm_mpagominimo / vm_msaldototal)), na.rm = TRUE)] #ratio utilizacion TC
   dataset[, c_deb_aut := rowSums(cbind(ccuenta_debitos_automaticos, ctarjeta_visa_debitos_automaticos, ctarjeta_master_debitos_automaticos), na.rm = TRUE)] #campo debitos autmaticos
   dataset[, m_deb_aut := rowSums(cbind(mcuenta_debitos_automaticos, mttarjeta_visa_debitos_automaticos, mttarjeta_master_debitos_automaticos), na.rm = TRUE)] #campo debitos autmaticos
   dataset[, c_pagos := rowSums(cbind(cpagodeservicios, cpagomiscuentas), na.rm = TRUE)] #campo pagos no automaticos voluntarios cantidad
@@ -351,4 +351,4 @@ cat(format(Sys.time(), "%Y%m%d %H%M%S"), "\n",
     file = "zRend.txt",
     append = TRUE
 )
-#final
+#final2
