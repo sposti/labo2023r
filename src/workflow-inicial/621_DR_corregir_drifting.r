@@ -1,4 +1,4 @@
-# Experimentos Colaborativos Default
+# Experimentos Colaborativos Default #SP##220230704-1957
 # Workflow  Data Drifting repair
 
 # limpio la memoria
@@ -19,7 +19,7 @@ PARAM$variables_intrames <- TRUE # atencion esto esta en TRUE
 
 # valores posibles
 #  "ninguno", "rank_simple", "rank_cero_fijo", "deflacion" yo hubiera usado rcf SP
-PARAM$metodo <- "deflacion"
+PARAM$metodo <- "rank_cero_fijo"
 
 PARAM$home <- "~/buckets/b1/"
 # FIN Parametros del script
@@ -161,9 +161,18 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset[, c_e_y_ratio := rowSums(cbind(ifelse(c_y_sp == 0, 0, c_e_sp / c_y_sp)), na.rm = TRUE)] #
   dataset[, p_y_ratio := rowSums(cbind(ifelse(m_y_sp == 0, 0, m_p_sp / m_y_sp)), na.rm = TRUE)] #
   dataset[, p_e_ratio := rowSums(cbind(ifelse(m_e_sp == 0, 0, m_p_sp / m_e_sp)), na.rm = TRUE)] #
+  dataset[, seguros_ratio_01 := rowSums(cbind(ifelse(c_e_sp == 0, 0, c_seguros / c_e_sp)), na.rm = TRUE)] #
+  dataset[, c_anclaje_pesado := rowSums(cbind(cprestamos_personales, cprestamos_prendarios, cprestamos_hipotecarios), na.rm = TRUE)] #
+  dataset[, m_anclaje_pesado := rowSums(cbind(mprestamos_personales, mprestamos_prendarios, mprestamos_hipotecarios), na.rm = TRUE)] #
+  dataset[, c_ganchos_liviano := rowSums(cbind(cplazo_fijo, cinversion1, cinversion2), na.rm = TRUE)] #
+  dataset[, m_ganchos_liviano := rowSums(cbind(mplazo_fijo_dolares, mplazo_fijo_pesos, minversion1_pesos, minversion1_dolares, minversion2), na.rm = TRUE)] #
+  dataset[, c_ganchos_anclaje_ratio := rowSums(cbind(ifelse(c_anclaje_pesado == 0, 0, c_ganchos_liviano / c_anclaje_pesado)), na.rm = TRUE)] #
+  dataset[, ganchos_anclaje_ratio := rowSums(cbind(ifelse(m_anclaje_pesado == 0, 0, m_ganchos_liviano / m_anclaje_pesado)), na.rm = TRUE)] #
   
   
-  #fin por ahora de variables SP
+  
+  
+  #fin por ahora de variables SP segunda tanda 20230704
   
   # valvula de seguridad para evitar valores infinitos
   # paso los infinitos a NULOS

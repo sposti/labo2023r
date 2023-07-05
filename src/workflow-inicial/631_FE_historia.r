@@ -1,4 +1,4 @@
-# Experimentos Colaborativos Default
+# Experimentos Colaborativos Default ##20230704 -2034
 # Workflow  Feature Engineering historico
 
 # limpio la memoria
@@ -22,38 +22,38 @@ PARAM$experimento <- "FE6310"
 PARAM$exp_input <- "DR6210"
 
 PARAM$lag1 <- TRUE
-PARAM$lag2 <- FALSE
-PARAM$lag3 <- FALSE
+PARAM$lag2 <- TRUE
+PARAM$lag3 <- TRUE
 
 PARAM$Tendencias1$run <- TRUE
 PARAM$Tendencias1$ventana <- 6
 PARAM$Tendencias1$tendencia <- TRUE
-PARAM$Tendencias1$minimo <- FALSE
-PARAM$Tendencias1$maximo <- FALSE
+PARAM$Tendencias1$minimo <- TRUE
+PARAM$Tendencias1$maximo <- TRUE
 PARAM$Tendencias1$promedio <- FALSE
 PARAM$Tendencias1$ratioavg <- FALSE
 PARAM$Tendencias1$ratiomax <- FALSE
 
-PARAM$Tendencias2$run <- FALSE
+PARAM$Tendencias2$run <- TRUE
 PARAM$Tendencias2$ventana <- 6
 PARAM$Tendencias2$tendencia <- TRUE
-PARAM$Tendencias2$minimo <- FALSE
-PARAM$Tendencias2$maximo <- FALSE
+PARAM$Tendencias2$minimo <- TRUE
+PARAM$Tendencias2$maximo <- TRUE
 PARAM$Tendencias2$promedio <- FALSE
 PARAM$Tendencias2$ratioavg <- FALSE
 PARAM$Tendencias2$ratiomax <- FALSE
 
 
 PARAM$RandomForest$run <- TRUE
-PARAM$RandomForest$num.trees <- 50
-PARAM$RandomForest$max.depth <- 3
-PARAM$RandomForest$min.node.size <- 500
+PARAM$RandomForest$num.trees <- 25
+PARAM$RandomForest$max.depth <- 4
+PARAM$RandomForest$min.node.size <- 696
 PARAM$RandomForest$mtry <- 40
 PARAM$RandomForest$semilla <- 666667 # cambiar por la propia semilla
 
 
 # varia de 0.0 a 2.0, si es 0.0 NO se activan
-PARAM$CanaritosAsesinos$ratio <- 0.42
+PARAM$CanaritosAsesinos$ratio <- 0.66
 # desvios estandar de la media, para el cutoff
 PARAM$CanaritosAsesinos$desvios <- 2.5
 # cambiar por la propia semilla
@@ -341,7 +341,7 @@ fganancia_lgbm_meseta <- function(probs, datos) {
 GVEZ <- 1
 
 CanaritosAsesinos <- function(
-    canaritos_ratio = 0.42,
+    canaritos_ratio = 0.66,
     canaritos_desvios = 2.5, canaritos_semilla = 666667) {
   gc()
   dataset[, clase01 := ifelse(clase_ternaria == "CONTINUA", 0, 1)]
@@ -661,4 +661,4 @@ cat(format(Sys.time(), "%Y%m%d %H%M%S"), "\n",
   append = TRUE
 )
 
-##ok sp
+##ok sp 20230704 2045
