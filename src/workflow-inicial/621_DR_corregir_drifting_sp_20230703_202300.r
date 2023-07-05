@@ -57,34 +57,23 @@ AgregarVariables_IntraMes <- function(dataset) {
   ]
   
   # variable extraida de una tesis de maestria de Irlanda
-  dataset[, mpayroll_sobre_edad := mpayroll / cliente_edad]
+  dataset[, mpayroll_sobre_edad := ifelse(cliente_edad == 0, 0, ifelse(is.na(mpayroll), 0, mpayroll) / cliente_edad, na.rm = TRUE) ]
   
   # se crean los nuevos campos para MasterCard  y Visa,
   #  teniendo en cuenta los NA's
   # varias formas de combinar Visa_status y Master_status
-  dataset[, vm_status01 := pmax(Master_status, Visa_status, na.rm = TRUE)]
-  dataset[, vm_status02 := Master_status + Visa_status]
+  dataset[, vm_status01 := pmax(ifelse(is.na(Master_status), 0, Master_status), ifelse(is.na(Visa_status), 0, Visa_status), na.rm = TRUE)]
+  dataset[, vm_status02 := ifelse(is.na(Master_status), 0, Master_status) + ifelse(is.na(Visa_status), 0, Visa_status)]
   
-  dataset[, vm_status03 := pmax(
-    ifelse(is.na(Master_status), 10, Master_status),
-    ifelse(is.na(Visa_status), 10, Visa_status)
-  )]
+  dataset[, vm_status03 := pmax(ifelse(is.na(Master_status), 10, Master_status),ifelse(is.na(Visa_status), 10, Visa_status))]
   
-  dataset[, vm_status04 := ifelse(is.na(Master_status), 10, Master_status)
-          + ifelse(is.na(Visa_status), 10, Visa_status)]
+  dataset[, vm_status04 := ifelse(is.na(Master_status), 10, Master_status) + ifelse(is.na(Visa_status), 10, Visa_status)]
   
-  dataset[, vm_status05 := ifelse(is.na(Master_status), 10, Master_status)
-          + 100 * ifelse(is.na(Visa_status), 10, Visa_status)]
+  dataset[, vm_status05 := ifelse(is.na(Master_status), 10, Master_status) + 100 * ifelse(is.na(Visa_status), 10, Visa_status)]
   
-  dataset[, vm_status06 := ifelse(is.na(Visa_status),
-                                  ifelse(is.na(Master_status), 10, Master_status),
-                                  Visa_status
-  )]
+  dataset[, vm_status06 := ifelse(is.na(Visa_status), ifelse(is.na(Master_status), 10, Master_status), Visa_status)]
   
-  dataset[, mv_status07 := ifelse(is.na(Master_status),
-                                  ifelse(is.na(Visa_status), 10, Visa_status),
-                                  Master_status
-  )]
+  dataset[, mv_status07 := ifelse(is.na(Master_status), ifelse(is.na(Visa_status), 10, Visa_status), Master_status)]
   
   
   # combino MasterCard y Visa
@@ -111,26 +100,26 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset[, vm_mpagominimo := rowSums(cbind(Master_mpagominimo, Visa_mpagominimo), na.rm = TRUE)]
   
   # a partir de aqui juego con la suma de Mastercard y Visa
-  dataset[, vmr_Master_mlimitecompra := Master_mlimitecompra / vm_mlimitecompra]
-  dataset[, vmr_Visa_mlimitecompra := Visa_mlimitecompra / vm_mlimitecompra]
-  dataset[, vmr_msaldototal := vm_msaldototal / vm_mlimitecompra]
-  dataset[, vmr_msaldopesos := vm_msaldopesos / vm_mlimitecompra]
-  dataset[, vmr_msaldopesos2 := vm_msaldopesos / vm_msaldototal]
-  dataset[, vmr_msaldodolares := vm_msaldodolares / vm_mlimitecompra]
-  dataset[, vmr_msaldodolares2 := vm_msaldodolares / vm_msaldototal]
-  dataset[, vmr_mconsumospesos := vm_mconsumospesos / vm_mlimitecompra]
-  dataset[, vmr_mconsumosdolares := vm_mconsumosdolares / vm_mlimitecompra]
-  dataset[, vmr_madelantopesos := vm_madelantopesos / vm_mlimitecompra]
-  dataset[, vmr_madelantodolares := vm_madelantodolares / vm_mlimitecompra]
-  dataset[, vmr_mpagado := vm_mpagado / vm_mlimitecompra]
-  dataset[, vmr_mpagospesos := vm_mpagospesos / vm_mlimitecompra]
-  dataset[, vmr_mpagosdolares := vm_mpagosdolares / vm_mlimitecompra]
-  dataset[, vmr_mconsumototal := vm_mconsumototal / vm_mlimitecompra]
-  dataset[, vmr_mpagominimo := vm_mpagominimo / vm_mlimitecompra]
+  dataset[, vmr_Master_mlimitecompra := ifelse(vm_mlimitecompra == 0, 0, ifelse(is.na(Master_mlimitecompra, 0,Master_mlimitecompra))  / vm_mlimitecompra , na.rm = TRUE)]
+  dataset[, vmr_Visa_mlimitecompra := ifelse(vm_mlimitecompra == 0, 0, ifelse(is.na(Visa_mlimitecompra, 0, Visa_mlimitecompra)) / vm_mlimitecompra, na.rm = TRUE)]
+  dataset[, vmr_msaldototal := ifelse(vm_mlimitecompra == 0, 0, vm_msaldototal / vm_mlimitecompra, na.rm = TRUE)]
+  dataset[, vmr_msaldopesos := ifelse(vm_mlimitecompra == 0, 0, vm_msaldopesos / vm_mlimitecompra, na.rm = TRUE)]
+  dataset[, vmr_msaldopesos2 := ifelse(vm_msaldototal == 0, 0, vm_msaldopesos / vm_msaldototal, na.rm = TRUE)]
+  dataset[, vmr_msaldodolares := ifelse(vm_mlimitecompra == 0, 0, vm_msaldodolares / vm_mlimitecompra, na.rm = TRUE)]
+  dataset[, vmr_msaldodolares2 := ifelse(vm_msaldototal == 0, 0, vm_msaldodolares / vm_msaldototal, na.rm = TRUE)]
+  dataset[, vmr_mconsumospesos := ifelse(vm_mlimitecompra == 0, 0, vm_mconsumospesos / vm_mlimitecompra, na.rm = TRUE)]
+  dataset[, vmr_mconsumosdolares := ifelse(vm_mlimitecompra == 0, 0, vm_mconsumosdolares / vm_mlimitecompra, na.rm = TRUE)]
+  dataset[, vmr_madelantopesos := ifelse(vm_mlimitecompra == 0, 0, vm_madelantopesos / vm_mlimitecompra, na.rm = TRUE)]
+  dataset[, vmr_madelantodolares := ifelse(vm_mlimitecompra == 0, 0, vm_madelantodolares / vm_mlimitecompra, na.rm = TRUE)]
+  dataset[, vmr_mpagado := ifelse(vm_mlimitecompra == 0, 0, vm_mpagado / vm_mlimitecompra, na.rm = TRUE)]
+  dataset[, vmr_mpagospesos := ifelse(vm_mlimitecompra == 0, 0, vm_mpagospesos / vm_mlimitecompra, na.rm = TRUE)]
+  dataset[, vmr_mpagosdolares := ifelse(vm_mlimitecompra == 0, 0, vm_mpagosdolares / vm_mlimitecompra, na.rm = TRUE)]
+  dataset[, vmr_mconsumototal := ifelse(vm_mlimitecompra == 0, 0, vm_mconsumototal / vm_mlimitecompra, na.rm = TRUE)]
+  dataset[, vmr_mpagominimo := ifelse(vm_mlimitecompra == 0, 0, vm_mpagominimo / vm_mlimitecompra, na.rm = TRUE)]
   
   # Aqui debe usted agregar sus propias nuevas variables -SP2
   
-  dataset[, vmr_pagominimo_saldo := rowSums(cbind(vm_mpagominimo / vm_msaldototal), na.rm = TRUE)] #ratio utilizacion TC
+  dataset[, vmr_pagominimo_saldo := ifelse(vm_msaldototal == 0, 0, vm_mpagominimo / vm_msaldototal, na.rm = TRUE)] #ratio utilizacion TC
   dataset[, c_deb_aut := rowSums(cbind(ccuenta_debitos_automaticos, ctarjeta_visa_debitos_automaticos, ctarjeta_master_debitos_automaticos), na.rm = TRUE)] #campo debitos autmaticos
   dataset[, m_deb_aut := rowSums(cbind(mcuenta_debitos_automaticos, mtarjeta_visa_debitos_automaticos, mtarjeta_master_debitos_automaticos), na.rm = TRUE)] #campo debitos autmaticos
   dataset[, c_pagos := rowSums(cbind(cpagodeservicios, cpagomiscuentas), na.rm = TRUE)] #campo pagos no automaticos voluntarios cantidad
@@ -141,26 +130,26 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset[, contactos := rowSums(cbind(ccajas_consultas, ccajas_depositos, ccajas_extracciones, ccajas_otras, cextraccion_autoservicio, ccheques_depositados, ccallcenter_transacciones), na.rm = TRUE)] #
   dataset[, visitas := rowSums(cbind(ccajas_consultas, ccajas_depositos, ccajas_extracciones, ccajas_otras, cextraccion_autoservicio, ccheques_depositados), na.rm = TRUE)] #
   dataset[, cajas_visitas := rowSums(cbind(ccajas_consultas, ccajas_depositos, ccajas_extracciones, ccajas_otras), na.rm = TRUE)] #
-  dataset[, cajas_ratio_01 := rowSums(cbind(ifelse(cajas_visitas == 0, 0, ccajas_consultas / cajas_visitas)), na.rm = TRUE)] #
-  dataset[, cajas_ratio_02 := rowSums(cbind(ifelse(cajas_visitas == 0, 0, ccajas_depositos / cajas_visitas)), na.rm = TRUE)] #
-  dataset[, cajas_ratio_03 := rowSums(cbind(ifelse(cajas_visitas == 0, 0, ccajas_extracciones / cajas_visitas)), na.rm = TRUE)] #
-  dataset[, cajas_ratio_04 := rowSums(cbind(ifelse(cajas_visitas == 0, 0, ccajas_otras / cajas_visitas)), na.rm = TRUE)] #
+  dataset[, cajas_ratio_01 := ifelse(cajas_visitas == 0, 0, ccajas_consultas / cajas_visitas, na.rm = TRUE)] #
+  dataset[, cajas_ratio_02 := ifelse(cajas_visitas == 0, 0, ccajas_depositos / cajas_visitas, na.rm = TRUE)] #
+  dataset[, cajas_ratio_03 := ifelse(cajas_visitas == 0, 0, ccajas_extracciones / cajas_visitas, na.rm = TRUE)] #
+  dataset[, cajas_ratio_04 := ifelse(cajas_visitas == 0, 0, ccajas_otras / cajas_visitas, na.rm = TRUE)] #
   dataset[, c_tax := rowSums(cbind(cpagodeservicios, cpagomiscuentas), na.rm = TRUE)] #campo debitos autmaticos
   dataset[, m_tax := rowSums(cbind(mpagodeservicios, mpagomiscuentas), na.rm = TRUE)] #campo debitos autmaticos
-  dataset[, hb_cajas := rowSums(cbind(ifelse(cajas_visitas == 0, 0, chomebanking_transacciones / cajas_visitas)), na.rm = TRUE)] #
+  dataset[, hb_cajas := ifelse(cajas_visitas == 0, 0, chomebanking_transacciones / cajas_visitas, na.rm = TRUE)] #
   dataset[, m_inversiones := rowSums(cbind(mplazo_fijo_dolares, mplazo_fijo_pesos, minversion1_pesos, minversion1_dolares, minversion2), na.rm = TRUE)] #
-  dataset[, atm_ratio_c := rowSums(cbind(ifelse((catm_trx + catm_trx_other) == 0, 0, catm_trx / (catm_trx + catm_trx_other))), na.rm = TRUE)] #
-  dataset[, atm_ratio_eme := rowSums(cbind(ifelse((matm + matm_other) == 0, 0, matm / (matm + matm_other))), na.rm = TRUE)] #
+  dataset[, atm_ratio_c := ifelse((catm_trx + catm_trx_other) == 0, 0, catm_trx / (catm_trx + catm_trx_other), na.rm = TRUE)] #
+  dataset[, atm_ratio_eme := ifelse((matm + matm_other) == 0, 0, matm / (matm + matm_other), na.rm = TRUE)] #
   dataset[, c_e_sp := rowSums(cbind(ctarjeta_debito_transacciones, ctarjeta_visa_transacciones, ctarjeta_master_transacciones, cpagodeservicios, ctransferencias_emitidas, cextraccion_autoservicio, ccheques_emitidos, ccheques_depositados_rechazados, ccheques_emitidos_rechazados, ccajas_extracciones, ccomisiones_otras), na.rm = TRUE)] #
   dataset[, m_e_sp := rowSums(cbind(mtarjeta_visa_consumo, mtarjeta_master_consumo, mcuenta_debitos_automaticos, mtarjeta_visa_debitos_automaticos, mttarjeta_master_debitos_automaticos, mpagodeservicios, mpagomiscuentas, mcomisiones_mantenimiento, mcomisiones_otras, mtransferencias_emitidas, mextraccion_autoservicio, mcheques_emitidos, mcheques_depositados_rechazados, mcheques_emitidos_rechazados), na.rm = TRUE)] #
   dataset[, c_y_sp := rowSums(cbind(cpayroll_trx, cpayroll2_trx, ctransferencias_recibidas, ccheques_depositados, ccajas_depositos), na.rm = TRUE)] #
   dataset[, m_y_sp := rowSums(cbind(mpayroll, mpayroll2, mtransferencias_recibidas, mcheques_depositados), na.rm = TRUE)] #
   dataset[, c_p_sp := rowSums(cbind(ccajeros_propios_descuentos, ctarjeta_visa_descuentos, ctarjeta_master_descuentos), na.rm = TRUE)] #
   dataset[, m_p_sp := rowSums(cbind(mcajeros_propios_descuentos, mtarjeta_visa_descuentos, mtarjeta_master_descuentos), na.rm = TRUE)] #
-  dataset[, e_y_ratio := rowSums(cbind(ifelse(m_y_sp == 0, 0, m_e_sp / m_y_sp)), na.rm = TRUE)] #
-  dataset[, c_e_y_ratio := rowSums(cbind(ifelse(c_y_sp == 0, 0, c_e_sp / c_y_sp)), na.rm = TRUE)] #
-  dataset[, p_y_ratio := rowSums(cbind(ifelse(m_y_sp == 0, 0, m_p_sp / m_y_sp)), na.rm = TRUE)] #
-  dataset[, p_e_ratio := rowSums(cbind(ifelse(m_e_sp == 0, 0, m_p_sp / m_e_sp)), na.rm = TRUE)] #
+  dataset[, e_y_ratio := ifelse(m_y_sp == 0, 0, m_e_sp / m_y_sp, na.rm = TRUE)] #
+  dataset[, c_e_y_ratio := ifelse(c_y_sp == 0, 0, c_e_sp / c_y_sp, na.rm = TRUE)] #
+  dataset[, p_y_ratio := ifelse(m_y_sp == 0, 0, m_p_sp / m_y_sp, na.rm = TRUE)] #
+  dataset[, p_e_ratio := ifelse(m_e_sp == 0, 0, m_p_sp / m_e_sp, na.rm = TRUE)] #
   
   
   #fin por ahora de variables SP
