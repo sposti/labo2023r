@@ -1,4 +1,4 @@
-# Experimentos Colaborativos Default ##20230704 -2034
+# Experimentos Colaborativos Default ##20230706 CORRIDA3
 # Workflow  Feature Engineering historico
 
 # limpio la memoria
@@ -22,32 +22,32 @@ PARAM$experimento <- "FE6310"
 PARAM$exp_input <- "DR6210"
 
 PARAM$lag1 <- TRUE
-PARAM$lag2 <- TRUE
-PARAM$lag3 <- TRUE
+PARAM$lag2 <- FALSE
+PARAM$lag3 <- FALSE
 
 PARAM$Tendencias1$run <- TRUE
 PARAM$Tendencias1$ventana <- 6
 PARAM$Tendencias1$tendencia <- TRUE
-PARAM$Tendencias1$minimo <- TRUE
-PARAM$Tendencias1$maximo <- TRUE
+PARAM$Tendencias1$minimo <- FALSE
+PARAM$Tendencias1$maximo <- FALSE
 PARAM$Tendencias1$promedio <- FALSE
 PARAM$Tendencias1$ratioavg <- FALSE
 PARAM$Tendencias1$ratiomax <- FALSE
 
-PARAM$Tendencias2$run <- TRUE
+PARAM$Tendencias2$run <- FALSE
 PARAM$Tendencias2$ventana <- 6
-PARAM$Tendencias2$tendencia <- TRUE
-PARAM$Tendencias2$minimo <- TRUE
-PARAM$Tendencias2$maximo <- TRUE
+PARAM$Tendencias2$tendencia <- FALSE
+PARAM$Tendencias2$minimo <- FALSE
+PARAM$Tendencias2$maximo <- FALSE
 PARAM$Tendencias2$promedio <- FALSE
 PARAM$Tendencias2$ratioavg <- FALSE
 PARAM$Tendencias2$ratiomax <- FALSE
 
 
 PARAM$RandomForest$run <- TRUE
-PARAM$RandomForest$num.trees <- 25
-PARAM$RandomForest$max.depth <- 4
-PARAM$RandomForest$min.node.size <- 696
+PARAM$RandomForest$num.trees <- 66
+PARAM$RandomForest$max.depth <- 3
+PARAM$RandomForest$min.node.size <- 666
 PARAM$RandomForest$mtry <- 40
 PARAM$RandomForest$semilla <- 666667 # cambiar por la propia semilla
 
@@ -55,7 +55,7 @@ PARAM$RandomForest$semilla <- 666667 # cambiar por la propia semilla
 # varia de 0.0 a 2.0, si es 0.0 NO se activan
 PARAM$CanaritosAsesinos$ratio <- 0.66
 # desvios estandar de la media, para el cutoff
-PARAM$CanaritosAsesinos$desvios <- 2.5
+PARAM$CanaritosAsesinos$desvios <- 3
 # cambiar por la propia semilla
 PARAM$CanaritosAsesinos$semilla <- 666667
 
@@ -342,7 +342,7 @@ GVEZ <- 1
 
 CanaritosAsesinos <- function(
     canaritos_ratio = 0.66,
-    canaritos_desvios = 2.5, canaritos_semilla = 666667) {
+    canaritos_desvios = 3, canaritos_semilla = 666667) {
   gc()
   dataset[, clase01 := ifelse(clase_ternaria == "CONTINUA", 0, 1)]
 
@@ -360,7 +360,7 @@ CanaritosAsesinos <- function(
   azar <- runif(nrow(dataset))
 
   dataset[, entrenamiento :=
-    foto_mes >= 202101 & foto_mes <= 202103 & (clase01 == 1 | azar < 0.10)]
+    foto_mes >= 202101 & foto_mes <= 202105 & (clase01 == 1 | azar < 0.10)]
 
   dtrain <- lgb.Dataset(
     data = data.matrix(dataset[entrenamiento == TRUE, campos_buenos, with = FALSE]),
@@ -373,10 +373,10 @@ CanaritosAsesinos <- function(
   )
 
   dvalid <- lgb.Dataset(
-    data = data.matrix(dataset[foto_mes == 202105, campos_buenos, with = FALSE]),
-    label = dataset[foto_mes == 202105, clase01],
+    data = data.matrix(dataset[foto_mes == 202106, campos_buenos, with = FALSE]),
+    label = dataset[foto_mes == 202106, clase01],
     weight = dataset[
-      foto_mes == 202105,
+      foto_mes == 202106,
       ifelse(clase_ternaria == "BAJA+2", 1.0000001, 1.0)
     ],
     free_raw_data = FALSE
@@ -398,7 +398,7 @@ CanaritosAsesinos <- function(
     max_bin = 31, # por ahora, lo dejo fijo
     num_iterations = 9999, # un numero grande, lo limita early_stopping_rounds
     force_row_wise = TRUE, # para que los alumnos no se atemoricen con  warning
-    learning_rate = 0.065,
+    learning_rate = 0.1,
     feature_fraction = 1.0, # lo seteo en 1
     min_data_in_leaf = 260,
     num_leaves = 60,
@@ -661,4 +661,4 @@ cat(format(Sys.time(), "%Y%m%d %H%M%S"), "\n",
   append = TRUE
 )
 
-##ok sp 20230704 2045
+##20230706 CORRIDA3

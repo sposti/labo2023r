@@ -1,4 +1,4 @@
-# Experimentos Colaborativos Default  SP
+# Experimentos Colaborativos Default  SP 20230706 CORRIDA3
 
 # Workflow  ZZ proceso final con semillas
 # Este nuevo script fue desarrolado para ayudar a los alumnos en la realizacion

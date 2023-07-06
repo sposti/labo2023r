@@ -1,4 +1,4 @@
-# Experimentos Colaborativos Default #SP##220230704-1957
+# Experimentos Colaborativos Default #SP##2202307 -CORRIDA 3
 # Workflow  Data Drifting repair
 
 # limpio la memoria
@@ -19,7 +19,7 @@ PARAM$variables_intrames <- TRUE # atencion esto esta en TRUE
 
 # valores posibles
 #  "ninguno", "rank_simple", "rank_cero_fijo", "deflacion" yo hubiera usado rcf SP
-PARAM$metodo <- "rank_cero_fijo"
+PARAM$metodo <- "deflacion"
 
 PARAM$home <- "~/buckets/b1/"
 # FIN Parametros del script
@@ -57,34 +57,26 @@ AgregarVariables_IntraMes <- function(dataset) {
   ]
   
   # variable extraida de una tesis de maestria de Irlanda
-  dataset[, mpayroll_sobre_edad := mpayroll / cliente_edad]
+  #dataset[, mpayroll_sobre_edad := mpayroll / cliente_edad]
+  dataset[, mpayroll_sobre_edad := ifelse(cliente_edad == 0, 0, ifelse(is.na(mpayroll), 0, mpayroll) / cliente_edad, na.rm = TRUE) ]
+  
+  
   
   # se crean los nuevos campos para MasterCard  y Visa,
   #  teniendo en cuenta los NA's
   # varias formas de combinar Visa_status y Master_status
-  dataset[, vm_status01 := pmax(Master_status, Visa_status, na.rm = TRUE)]
-  dataset[, vm_status02 := Master_status + Visa_status]
+  dataset[, vm_status01 := pmax(ifelse(is.na(Master_status), 0, Master_status), ifelse(is.na(Visa_status), 0, Visa_status), na.rm = TRUE)]
+  dataset[, vm_status02 := ifelse(is.na(Master_status), 0, Master_status) + ifelse(is.na(Visa_status), 0, Visa_status)]
   
-  dataset[, vm_status03 := pmax(
-    ifelse(is.na(Master_status), 10, Master_status),
-    ifelse(is.na(Visa_status), 10, Visa_status)
-  )]
+  dataset[, vm_status03 := pmax(ifelse(is.na(Master_status), 10, Master_status),ifelse(is.na(Visa_status), 10, Visa_status))]
   
-  dataset[, vm_status04 := ifelse(is.na(Master_status), 10, Master_status)
-          + ifelse(is.na(Visa_status), 10, Visa_status)]
+  dataset[, vm_status04 := ifelse(is.na(Master_status), 10, Master_status) + ifelse(is.na(Visa_status), 10, Visa_status)]
   
-  dataset[, vm_status05 := ifelse(is.na(Master_status), 10, Master_status)
-          + 100 * ifelse(is.na(Visa_status), 10, Visa_status)]
+  dataset[, vm_status05 := ifelse(is.na(Master_status), 10, Master_status) + 100 * ifelse(is.na(Visa_status), 10, Visa_status)]
   
-  dataset[, vm_status06 := ifelse(is.na(Visa_status),
-                                  ifelse(is.na(Master_status), 10, Master_status),
-                                  Visa_status
-  )]
+  dataset[, vm_status06 := ifelse(is.na(Visa_status), ifelse(is.na(Master_status), 10, Master_status), Visa_status)]
   
-  dataset[, mv_status07 := ifelse(is.na(Master_status),
-                                  ifelse(is.na(Visa_status), 10, Visa_status),
-                                  Master_status
-  )]
+  dataset[, mv_status07 := ifelse(is.na(Master_status), ifelse(is.na(Visa_status), 10, Visa_status), Master_status)]
   
   
   # combino MasterCard y Visa
@@ -360,4 +352,4 @@ cat(format(Sys.time(), "%Y%m%d %H%M%S"), "\n",
     file = "zRend.txt",
     append = TRUE
 )
-#final2
+#SP##2202307 -CORRIDA 3 FINAL

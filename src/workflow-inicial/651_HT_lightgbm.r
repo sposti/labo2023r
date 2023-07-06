@@ -1,4 +1,4 @@
-# Experimentos Colaborativos Default #sp
+# Experimentos Colaborativos Default #sp 20230706 corrida3
 # Hyperparameter Tuning  lightgbm
 
 # pensado para datasets con UNDERSAPLING de la clase mayoritaria
@@ -74,15 +74,15 @@ PARAM$lgb_basicos <- list(
 # Aqui se cargan los hiperparametros que se optimizan
 #  en la Bayesian Optimization
 PARAM$bo_lgb <- makeParamSet(
-  makeNumericParam("learning_rate", lower = 0.01, upper = 0.2),
+  makeNumericParam("learning_rate", lower = 0.01, upper = 0.3),
   makeNumericParam("feature_fraction", lower = 0.01, upper = 1.0),
   makeIntegerParam("num_leaves", lower = 8L, upper = 1024L),
-  makeIntegerParam("min_data_in_leaf", lower = 100L, upper = 50000L)
+  makeIntegerParam("min_data_in_leaf", lower = 500L, upper = 50000L)
 )
 
 
 # si usted es ambicioso, y tiene paciencia, podria subir este valor a 100
-PARAM$bo_iteraciones <- 50 # iteraciones de la Optimizacion Bayesiana #sp 66
+PARAM$bo_iteraciones <- 40 # iteraciones de la Optimizacion Bayesiana #sp 66
 
 PARAM$home <- "~/buckets/b1/"
 
@@ -658,4 +658,4 @@ cat(format(Sys.time(), "%Y%m%d %H%M%S"), "\n",
   append = TRUE
 )
 
-##sp ok2 20230704 -2107
+##sp ok2 20230706 corrida3

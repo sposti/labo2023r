@@ -1,4 +1,4 @@
-# Corrida general del workflow SP  20230704 - 2108
+# Corrida general del workflow SP  20230706 CORRIDA3
 
 options(error = function() {
   traceback(20)
@@ -20,4 +20,4 @@ source("~/labo2023r/src/workflow-inicial/651_HT_lightgbm.r")
 source("~/labo2023r/src/workflow-inicial/661_ZZ_final.r")
 
 
-#sp ok 20230704 -2109
+#sp ok 20230706 CORRIDA3
