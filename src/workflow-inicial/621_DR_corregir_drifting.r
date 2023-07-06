@@ -1,4 +1,4 @@
-# Experimentos Colaborativos Default #SP##2202307 -CORRIDA 3
+# Experimentos Colaborativos Default #SP##2202307 -CORRIDA 3 bis
 # Workflow  Data Drifting repair
 
 # limpio la memoria
@@ -58,7 +58,8 @@ AgregarVariables_IntraMes <- function(dataset) {
   
   # variable extraida de una tesis de maestria de Irlanda
   #dataset[, mpayroll_sobre_edad := mpayroll / cliente_edad]
-  dataset[, mpayroll_sobre_edad := ifelse(cliente_edad == 0, 0, ifelse(is.na(mpayroll), 0, mpayroll) / cliente_edad, na.rm = TRUE) ]
+  #dataset[, mpayroll_sobre_edad := ifelse(cliente_edad == 0, 0, ifelse(is.na(mpayroll), 0, mpayroll) / cliente_edad, na.rm = TRUE) ]
+   dataset[, mpayroll_sobre_edad := ifelse(dataset$cliente_edad == 0 | is.na(dataset$mpayroll), 0, dataset$mpayroll / dataset$cliente_edad)]
   
   
   
