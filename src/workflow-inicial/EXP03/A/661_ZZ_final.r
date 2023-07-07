@@ -43,7 +43,7 @@ PARAM$exp_input <- "HT6510"
 PARAM$modelos_rank <- c(1)
 
 # reemplazar por las propias semillas
-PARAM$semillas <- c(666667, 666671, 666683, 666697, 666707)
+PARAM$semillas <- c(330359,816161,697687,320239,999983,251033,251051,251057,251059,251063)
 
 PARAM$kaggle$envios_desde <- 9500L
 PARAM$kaggle$envios_hasta <- 11500L
