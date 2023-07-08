@@ -35,8 +35,8 @@ require("lightgbm")
 
 # Parametros del script
 PARAM <- list()
-PARAM$experimento <- "ZZ6610"
-PARAM$exp_input <- "HT6510"
+PARAM$experimento <- "ZZ6610_G6_B_004"
+PARAM$exp_input <- "HT6510_G6_B_004"
 
 # Atencion, que cada modelos se procesa con 5 semillas, ajuste a SUS necesidades
 # Que modelos quiero, segun su posicion en el ranking e la Bayesian Optimizacion, ordenado por ganancia descendente
@@ -54,7 +54,7 @@ PARAM$graficar$envios_desde <- 8000L
 PARAM$graficar$envios_hasta <- 20000L
 PARAM$graficar$ventana_suavizado <- 2001L
 
-PARAM$home <- "~/buckets/b2/"
+PARAM$home <- "~/buckets/b1/"
 # FIN Parametros del script
 
 OUTPUT <- list()
@@ -77,7 +77,7 @@ GrabarOutput <- function() {
 OUTPUT$PARAM <- PARAM
 OUTPUT$time$start <- format(Sys.time(), "%Y%m%d %H%M%S")
 
-base_dir <- "~/buckets/b2/"
+base_dir <- "~/buckets/b1/"
 
 # creo la carpeta donde va el experimento
 dir.create(paste0(base_dir, "exp/", PARAM$experimento, "/"),
