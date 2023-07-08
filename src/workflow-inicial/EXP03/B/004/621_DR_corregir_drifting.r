@@ -21,7 +21,7 @@ PARAM$variables_intrames <- TRUE # atencion esto esta en TRUE
 #  "ninguno", "rank_simple", "rank_cero_fijo", "deflacion"
 PARAM$metodo <- "rank_cero_fijo"
 
-PARAM$home <- "~/buckets/b1/"
+PARAM$home <- "~/buckets/b2/"
 # FIN Parametros del script
 
 OUTPUT <- list()

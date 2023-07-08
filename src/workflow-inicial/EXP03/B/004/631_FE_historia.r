@@ -59,7 +59,7 @@ PARAM$CanaritosAsesinos$desvios <- 4.0
 # cambiar por la propia semilla
 PARAM$CanaritosAsesinos$semilla <- 666671
 
-PARAM$home <- "~/buckets/b1/"
+PARAM$home <- "~/buckets/b2/"
 # FIN Parametros del script
 
 OUTPUT <- list()
