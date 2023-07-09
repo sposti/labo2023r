@@ -1,4 +1,4 @@
-# Experimentos Colaborativos Default #sp 20230706 corrida3
+# Experimentos Colaborativos Default
 # Hyperparameter Tuning  lightgbm
 
 # pensado para datasets con UNDERSAPLING de la clase mayoritaria
@@ -27,14 +27,14 @@ options(error = function() {
 
 # Parametros del script
 PARAM <- list()
-PARAM$experimento <- "HT6510_G3_B_001"
+PARAM$experimento <- "HT6510"
 
-PARAM$exp_input <- "TS6410_G3_B_001"
+PARAM$exp_input <- "TS6410"
 
 # En caso que se haga cross validation, se usa esta cantidad de folds
 PARAM$lgb_crossvalidation_folds <- 5
 
-PARAM$lgb_semilla <- 666667 # cambiar por su propia semilla
+PARAM$lgb_semilla <- 103717 # cambiar por su propia semilla
 
 
 # Hiperparametros FIJOS de  lightgbm
@@ -74,15 +74,15 @@ PARAM$lgb_basicos <- list(
 # Aqui se cargan los hiperparametros que se optimizan
 #  en la Bayesian Optimization
 PARAM$bo_lgb <- makeParamSet(
-  makeNumericParam("learning_rate", lower = 0.01, upper = 0.3),
+  makeNumericParam("learning_rate", lower = 0.02, upper = 0.3),
   makeNumericParam("feature_fraction", lower = 0.01, upper = 1.0),
   makeIntegerParam("num_leaves", lower = 8L, upper = 1024L),
-  makeIntegerParam("min_data_in_leaf", lower = 500L, upper = 50000L)
+  makeIntegerParam("min_data_in_leaf", lower = 100L, upper = 50000L)
 )
 
 
 # si usted es ambicioso, y tiene paciencia, podria subir este valor a 100
-PARAM$bo_iteraciones <- 40 # iteraciones de la Optimizacion Bayesiana #sp 66
+PARAM$bo_iteraciones <- 50 # iteraciones de la Optimizacion Bayesiana
 
 PARAM$home <- "~/buckets/b1/"
 
@@ -657,5 +657,3 @@ cat(format(Sys.time(), "%Y%m%d %H%M%S"), "\n",
   file = "zRend.txt",
   append = TRUE
 )
-
-##sp ok2 20230706 corrida3

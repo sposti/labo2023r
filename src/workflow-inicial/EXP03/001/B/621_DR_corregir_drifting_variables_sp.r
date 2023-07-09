@@ -123,7 +123,45 @@ AgregarVariables_IntraMes <- function(dataset) {
   
   # Aqui debe usted agregar sus propias nuevas variables -SP2
   
-
+  dataset[, vmr_pagominimo_saldo := rowSums(cbind(ifelse(vm_msaldototal == 0, 0, vm_mpagominimo / vm_msaldototal)), na.rm = TRUE)] #ratio utilizacion TC
+  dataset[, c_deb_aut := rowSums(cbind(ccuenta_debitos_automaticos, ctarjeta_visa_debitos_automaticos, ctarjeta_master_debitos_automaticos), na.rm = TRUE)] #campo debitos autmaticos
+  dataset[, m_deb_aut := rowSums(cbind(mcuenta_debitos_automaticos, mttarjeta_visa_debitos_automaticos, mttarjeta_master_debitos_automaticos), na.rm = TRUE)] #campo debitos autmaticos
+  dataset[, c_pagos := rowSums(cbind(cpagodeservicios, cpagomiscuentas), na.rm = TRUE)] #campo pagos no automaticos voluntarios cantidad
+  dataset[, m_pagos := rowSums(cbind(mpagodeservicios, mpagomiscuentas), na.rm = TRUE)] #campo pagos no automaticos voluntarios  monto
+  dataset[, c_seguros := rowSums(cbind(cseguro_vida, cseguro_auto, cseguro_vivienda, cseguro_accidentes_personales), na.rm = TRUE)] #campo pagos no automaticos voluntarios  monto
+  dataset[, estado := rowSums(cbind(Master_status + Visa_status), na.rm = TRUE)] #
+  dataset[, vm_status_SP := ifelse(is.na(Master_status), 0, Master_status) + ifelse(is.na(Visa_status), 0, Visa_status)] #status que empeora si la TC está en proceso de baja o dada de baja. El no tener no suma complejidad.
+  dataset[, contactos := rowSums(cbind(ccajas_consultas, ccajas_depositos, ccajas_extracciones, ccajas_otras, cextraccion_autoservicio, ccheques_depositados, ccallcenter_transacciones), na.rm = TRUE)] #
+  dataset[, visitas := rowSums(cbind(ccajas_consultas, ccajas_depositos, ccajas_extracciones, ccajas_otras, cextraccion_autoservicio, ccheques_depositados), na.rm = TRUE)] #
+  dataset[, cajas_visitas := rowSums(cbind(ccajas_consultas, ccajas_depositos, ccajas_extracciones, ccajas_otras), na.rm = TRUE)] #
+  dataset[, cajas_ratio_01 := rowSums(cbind(ifelse(cajas_visitas == 0, 0, ccajas_consultas / cajas_visitas)), na.rm = TRUE)] #
+  dataset[, cajas_ratio_02 := rowSums(cbind(ifelse(cajas_visitas == 0, 0, ccajas_depositos / cajas_visitas)), na.rm = TRUE)] #
+  dataset[, cajas_ratio_03 := rowSums(cbind(ifelse(cajas_visitas == 0, 0, ccajas_extracciones / cajas_visitas)), na.rm = TRUE)] #
+  dataset[, cajas_ratio_04 := rowSums(cbind(ifelse(cajas_visitas == 0, 0, ccajas_otras / cajas_visitas)), na.rm = TRUE)] #
+  dataset[, c_tax := rowSums(cbind(cpagodeservicios, cpagomiscuentas), na.rm = TRUE)] #campo debitos autmaticos
+  dataset[, m_tax := rowSums(cbind(mpagodeservicios, mpagomiscuentas), na.rm = TRUE)] #campo debitos autmaticos
+  dataset[, hb_cajas := rowSums(cbind(ifelse(cajas_visitas == 0, 0, chomebanking_transacciones / cajas_visitas)), na.rm = TRUE)] #
+  dataset[, m_inversiones := rowSums(cbind(mplazo_fijo_dolares, mplazo_fijo_pesos, minversion1_pesos, minversion1_dolares, minversion2), na.rm = TRUE)] #
+  dataset[, atm_ratio_c := rowSums(cbind(ifelse((catm_trx + catm_trx_other) == 0, 0, catm_trx / (catm_trx + catm_trx_other))), na.rm = TRUE)] #
+  dataset[, atm_ratio_eme := rowSums(cbind(ifelse((matm + matm_other) == 0, 0, matm / (matm + matm_other))), na.rm = TRUE)] #
+  dataset[, c_e_sp := rowSums(cbind(ctarjeta_debito_transacciones, ctarjeta_visa_transacciones, ctarjeta_master_transacciones, cpagodeservicios, ctransferencias_emitidas, cextraccion_autoservicio, ccheques_emitidos, ccheques_depositados_rechazados, ccheques_emitidos_rechazados, ccajas_extracciones, ccomisiones_otras), na.rm = TRUE)] #
+  dataset[, m_e_sp := rowSums(cbind(mtarjeta_visa_consumo, mtarjeta_master_consumo, mcuenta_debitos_automaticos, mttarjeta_visa_debitos_automaticos, mttarjeta_master_debitos_automaticos, mpagodeservicios, mpagomiscuentas, mcomisiones_mantenimiento, mcomisiones_otras, mtransferencias_emitidas, mextraccion_autoservicio, mcheques_emitidos, mcheques_depositados_rechazados, mcheques_emitidos_rechazados), na.rm = TRUE)] #
+  dataset[, c_y_sp := rowSums(cbind(cpayroll_trx, cpayroll2_trx, ctransferencias_recibidas, ccheques_depositados, ccajas_depositos), na.rm = TRUE)] #
+  dataset[, m_y_sp := rowSums(cbind(mpayroll, mpayroll2, mtransferencias_recibidas, mcheques_depositados), na.rm = TRUE)] #
+  dataset[, c_p_sp := rowSums(cbind(ccajeros_propios_descuentos, ctarjeta_visa_descuentos, ctarjeta_master_descuentos), na.rm = TRUE)] #
+  dataset[, m_p_sp := rowSums(cbind(mcajeros_propios_descuentos, mtarjeta_visa_descuentos, mtarjeta_master_descuentos), na.rm = TRUE)] #
+  dataset[, e_y_ratio := rowSums(cbind(ifelse(m_y_sp == 0, 0, m_e_sp / m_y_sp)), na.rm = TRUE)] #
+  dataset[, c_e_y_ratio := rowSums(cbind(ifelse(c_y_sp == 0, 0, c_e_sp / c_y_sp)), na.rm = TRUE)] #
+  dataset[, p_y_ratio := rowSums(cbind(ifelse(m_y_sp == 0, 0, m_p_sp / m_y_sp)), na.rm = TRUE)] #
+  dataset[, p_e_ratio := rowSums(cbind(ifelse(m_e_sp == 0, 0, m_p_sp / m_e_sp)), na.rm = TRUE)] #
+  dataset[, seguros_ratio_01 := rowSums(cbind(ifelse(c_e_sp == 0, 0, c_seguros / c_e_sp)), na.rm = TRUE)] #
+  dataset[, c_anclaje_pesado := rowSums(cbind(cprestamos_personales, cprestamos_prendarios, cprestamos_hipotecarios), na.rm = TRUE)] #
+  dataset[, m_anclaje_pesado := rowSums(cbind(mprestamos_personales, mprestamos_prendarios, mprestamos_hipotecarios), na.rm = TRUE)] #
+  dataset[, c_ganchos_liviano := rowSums(cbind(cplazo_fijo, cinversion1, cinversion2), na.rm = TRUE)] #
+  dataset[, m_ganchos_liviano := rowSums(cbind(mplazo_fijo_dolares, mplazo_fijo_pesos, minversion1_pesos, minversion1_dolares, minversion2), na.rm = TRUE)] #
+  dataset[, c_ganchos_anclaje_ratio := rowSums(cbind(ifelse(c_anclaje_pesado == 0, 0, c_ganchos_liviano / c_anclaje_pesado)), na.rm = TRUE)] #
+  dataset[, ganchos_anclaje_ratio := rowSums(cbind(ifelse(m_anclaje_pesado == 0, 0, m_ganchos_liviano / m_anclaje_pesado)), na.rm = TRUE)] #
+  
   
   
   

@@ -1,4 +1,4 @@
-# Experimentos Colaborativos Default ##20230704 -2033 3
+# Experimentos Colaborativos Default
 # Workflow  Catastrophe Analysis
 
 # limpio la memoria
@@ -10,7 +10,7 @@ require("yaml")
 
 # Parametros del script
 PARAM <- list()
-PARAM$experimento <- "CA6110_G3_B_001"
+PARAM$experimento <- "CA6110"
 PARAM$dataset <- "./datasets/competencia_2023.csv.gz"
 
 # valores posibles

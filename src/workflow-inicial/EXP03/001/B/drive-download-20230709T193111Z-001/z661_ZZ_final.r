@@ -1,4 +1,4 @@
-# Experimentos Colaborativos Default  SP 20230706 CORRIDA3
+# Experimentos Colaborativos Default
 
 # Workflow  ZZ proceso final con semillas
 # Este nuevo script fue desarrolado para ayudar a los alumnos en la realizacion
@@ -35,15 +35,15 @@ require("lightgbm")
 
 # Parametros del script
 PARAM <- list()
-PARAM$experimento <- "ZZ6610_G3_B_001"
-PARAM$exp_input <- "HT6510_G3_B_001"
+PARAM$experimento <- "ZZ6610_E1"
+PARAM$exp_input <- "HT6510"
 
 # Atencion, que cada modelos se procesa con 5 semillas, ajuste a SUS necesidades
 # Que modelos quiero, segun su posicion en el ranking e la Bayesian Optimizacion, ordenado por ganancia descendente
 PARAM$modelos_rank <- c(1)
 
 # reemplazar por las propias semillas
-PARAM$semillas <- c(666667, 666671, 666683, 666697, 666707)
+PARAM$semillas <- c(103717,117023,127081,149419,159521, 330011, 330029, 330047, 330054, 330113)
 
 PARAM$kaggle$envios_desde <- 9500L
 PARAM$kaggle$envios_hasta <- 11500L
@@ -392,4 +392,3 @@ cat(format(Sys.time(), "%Y%m%d %H%M%S"), "\n",
   file = "zRend.txt",
   append = TRUE
 )
-#ok sp 20230704 -2108

@@ -1,4 +1,4 @@
-# Experimentos Colaborativos Default ##20230706 CORRIDA3
+# Experimentos Colaborativos Default
 # Workflow  Feature Engineering historico
 
 # limpio la memoria
@@ -17,9 +17,9 @@ require("lightgbm")
 
 # Parametros del script
 PARAM <- list()
-PARAM$experimento <- "FE6310_G3_B_001"
+PARAM$experimento <- "FE6310"
 
-PARAM$exp_input <- "DR6210_G3_B_001"
+PARAM$exp_input <- "DR6210"
 
 PARAM$lag1 <- TRUE
 PARAM$lag2 <- TRUE
@@ -36,7 +36,7 @@ PARAM$Tendencias1$ratiomax <- FALSE
 
 PARAM$Tendencias2$run <- FALSE
 PARAM$Tendencias2$ventana <- 6
-PARAM$Tendencias2$tendencia <- FALSE
+PARAM$Tendencias2$tendencia <- TRUE
 PARAM$Tendencias2$minimo <- FALSE
 PARAM$Tendencias2$maximo <- FALSE
 PARAM$Tendencias2$promedio <- FALSE
@@ -49,7 +49,7 @@ PARAM$RandomForest$num.trees <- 20
 PARAM$RandomForest$max.depth <- 4
 PARAM$RandomForest$min.node.size <- 1000
 PARAM$RandomForest$mtry <- 40
-PARAM$RandomForest$semilla <- 666667 # cambiar por la propia semilla
+PARAM$RandomForest$semilla <- 103717 # cambiar por la propia semilla
 
 
 # varia de 0.0 a 2.0, si es 0.0 NO se activan
@@ -57,7 +57,7 @@ PARAM$CanaritosAsesinos$ratio <- 0.0
 # desvios estandar de la media, para el cutoff
 PARAM$CanaritosAsesinos$desvios <- 4.0
 # cambiar por la propia semilla
-PARAM$CanaritosAsesinos$semilla <- 666667
+PARAM$CanaritosAsesinos$semilla <- 117023
 
 PARAM$home <- "~/buckets/b1/"
 # FIN Parametros del script
@@ -341,8 +341,8 @@ fganancia_lgbm_meseta <- function(probs, datos) {
 GVEZ <- 1
 
 CanaritosAsesinos <- function(
-    canaritos_ratio = 0.66,
-    canaritos_desvios = 3, canaritos_semilla = 666667) {
+    canaritos_ratio = 0.2,
+    canaritos_desvios = 3.0, canaritos_semilla = 999983) {
   gc()
   dataset[, clase01 := ifelse(clase_ternaria == "CONTINUA", 0, 1)]
 
@@ -360,7 +360,7 @@ CanaritosAsesinos <- function(
   azar <- runif(nrow(dataset))
 
   dataset[, entrenamiento :=
-    foto_mes >= 202101 & foto_mes <= 202105 & (clase01 == 1 | azar < 0.10)]
+    foto_mes >= 202101 & foto_mes <= 202103 & (clase01 == 1 | azar < 0.10)]
 
   dtrain <- lgb.Dataset(
     data = data.matrix(dataset[entrenamiento == TRUE, campos_buenos, with = FALSE]),
@@ -373,10 +373,10 @@ CanaritosAsesinos <- function(
   )
 
   dvalid <- lgb.Dataset(
-    data = data.matrix(dataset[foto_mes == 202106, campos_buenos, with = FALSE]),
-    label = dataset[foto_mes == 202106, clase01],
+    data = data.matrix(dataset[foto_mes == 202105, campos_buenos, with = FALSE]),
+    label = dataset[foto_mes == 202105, clase01],
     weight = dataset[
-      foto_mes == 202106,
+      foto_mes == 202105,
       ifelse(clase_ternaria == "BAJA+2", 1.0000001, 1.0)
     ],
     free_raw_data = FALSE
@@ -398,7 +398,7 @@ CanaritosAsesinos <- function(
     max_bin = 31, # por ahora, lo dejo fijo
     num_iterations = 9999, # un numero grande, lo limita early_stopping_rounds
     force_row_wise = TRUE, # para que los alumnos no se atemoricen con  warning
-    learning_rate = 0.1,
+    learning_rate = 0.065,
     feature_fraction = 1.0, # lo seteo en 1
     min_data_in_leaf = 260,
     num_leaves = 60,
@@ -660,5 +660,3 @@ cat(format(Sys.time(), "%Y%m%d %H%M%S"), "\n",
   file = "zRend.txt",
   append = TRUE
 )
-
-##20230706 CORRIDA3
