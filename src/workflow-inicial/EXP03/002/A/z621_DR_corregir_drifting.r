@@ -129,63 +129,51 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset[, vmr_mpagominimo := vm_mpagominimo / vm_mlimitecompra]
 
   # Aqui debe usted agregar sus propias nuevas variables
-  # variables nuevas: cociente de las 5 + importantes del E1
+  # variables nuevas: cociente de las 5 "primer orden" + importantes del E1
   
-  #ctrx_quarter_normalizado
-  dataset[, impo_01:= ifelse(dataset$Visa_mpagospesos_rank == 0 | is.na(dataset$ctrx_quarter_normalizado), 0, dataset$ctrx_quarter_normalizado / dataset$Visa_mpagospesos_rank)]
-  dataset[, impo_02:= ifelse(dataset$mpasivos_margen_rank == 0 | is.na(dataset$ctrx_quarter_normalizado), 0, dataset$ctrx_quarter_normalizado / dataset$mpasivos_margen_rank)]
-  dataset[, impo_03 := ifelse(dataset$mcaja_ahorro_rank_lag1 == 0 | is.na(dataset$ctrx_quarter_normalizado), 0, dataset$ctrx_quarter_normalizado / dataset$mcaja_ahorro_rank_lag1)]
-  dataset[, impo_04:= ifelse(dataset$ctrx_quarter == 0 | is.na(dataset$ctrx_quarter_normalizado), 0, dataset$ctrx_quarter_normalizado / dataset$ctrx_quarter)]
-  dataset[, impo_05 := ifelse(dataset$mcaja_ahorro_rank == 0 | is.na(dataset$ctrx_quarter_normalizado), 0, dataset$ctrx_quarter_normalizado / dataset$mcaja_ahorro_rank)]
-  dataset[, impo_06:= ifelse(dataset$mpayroll_sobre_edad_rank == 0 | is.na(dataset$ctrx_quarter_normalizado), 0, dataset$ctrx_quarter_normalizado / dataset$mpayroll_sobre_edad_rank)]
-  dataset[, impo_07 := ifelse(dataset$mtarjeta_visa_consumo_rank == 0 | is.na(dataset$ctrx_quarter_normalizado), 0, dataset$ctrx_quarter_normalizado / dataset$mtarjeta_visa_consumo_rank)]
-  dataset[, impo_08 := ifelse(dataset$mautoservicio_rank == 0 | is.na(dataset$ctrx_quarter_normalizado), 0, dataset$ctrx_quarter_normalizado / dataset$mautoservicio_rank)]
-  dataset[, impo_09 := ifelse(dataset$mpayroll_sobre_edad_rank_lag2 == 0 | is.na(dataset$ctrx_quarter_normalizado), 0, dataset$ctrx_quarter_normalizado / dataset$mpayroll_sobre_edad_rank_lag2)]
+  #numeradores/
+  #ctrx_quarter_normalizado 
+  dataset[, impo_01 := ctrx_quarter_normalizado / ctrx_quarter]
+  dataset[, impo_02 := ctrx_quarter_normalizado / Visa_status]
+  dataset[, impo_03 := ctrx_quarter_normalizado / vm_status05]
+  dataset[, impo_04 := ctrx_quarter_normalizado / vm_status01]
+  dataset[, impo_05 := ctrx_quarter_normalizado / vmr_mpagominimo]
+  
+  #ctrx_quarter/
+  dataset[, impo_06 := ctrx_quarter / ctrx_quarter_normalizado]
+  dataset[, impo_07 := ctrx_quarter / Visa_status]
+  dataset[, impo_08 := ctrx_quarter / vm_status05]
+  dataset[, impo_09 := ctrx_quarter / vm_status01]
+  dataset[, impo_10 := ctrx_quarter / vmr_mpagominimo]
   
   
-  #Visa_mpagospesos_rank
-  dataset[, impo_10 := ifelse(dataset$ctrx_quarter_normalizado == 0 | is.na(dataset$Visa_mpagospesos_rank), 0, dataset$Visa_mpagospesos_rank / dataset$ctrx_quarter_normalizado)]
-  dataset[, impo_11 := ifelse(dataset$mpasivos_margen_rank == 0 | is.na(dataset$Visa_mpagospesos_rank), 0, dataset$Visa_mpagospesos_rank / dataset$mpasivos_margen_rank)]
-  dataset[, impo_12 := ifelse(dataset$mcaja_ahorro_rank_lag1 == 0 | is.na(dataset$Visa_mpagospesos_rank), 0, dataset$Visa_mpagospesos_rank / dataset$mcaja_ahorro_rank_lag1)]
-  dataset[, impo_13 := ifelse(dataset$ctrx_quarter == 0 | is.na(dataset$Visa_mpagospesos_rank), 0, dataset$Visa_mpagospesos_rank / dataset$ctrx_quarter)]
-  dataset[, impo_14 := ifelse(dataset$mcaja_ahorro_rank == 0 | is.na(dataset$Visa_mpagospesos_rank), 0, dataset$Visa_mpagospesos_rank / dataset$mcaja_ahorro_rank)]
-  dataset[, impo_15:= ifelse(dataset$mpayroll_sobre_edad_rank == 0 | is.na(dataset$Visa_mpagospesos_rank), 0, dataset$Visa_mpagospesos_rank / dataset$mpayroll_sobre_edad_rank)]
-  dataset[, impo_16:= ifelse(dataset$mtarjeta_visa_consumo_rank == 0 | is.na(dataset$Visa_mpagospesos_rank), 0, dataset$Visa_mpagospesos_rank / dataset$mtarjeta_visa_consumo_rank)]
-  dataset[, impo_17 := ifelse(dataset$mautoservicio_rank == 0 | is.na(dataset$Visa_mpagospesos_rank), 0, dataset$Visa_mpagospesos_rank / dataset$mautoservicio_rank)]
-  dataset[, impo_18 := ifelse(dataset$mpayroll_sobre_edad_rank_lag2 == 0 | is.na(dataset$Visa_mpagospesos_rank), 0, dataset$Visa_mpagospesos_rank / dataset$mpayroll_sobre_edad_rank_lag2)]
+  #visa_status/
+  dataset[, impo_11 := Visa_status / ctrx_quarter_normalizado]
+  dataset[, impo_12 := Visa_status / ctrx_quarter ]
+  dataset[, impo_13 := Visa_status / vm_status05]
+  dataset[, impo_14 := Visa_status / vm_status01]
+  dataset[, impo_15 := Visa_status / vmr_mpagominimo]
   
-  #mpasivos_margen_rank
-  dataset[, impo_19 := ifelse(dataset$ctrx_quarter_normalizado == 0 | is.na(dataset$mpasivos_margen_rank), 0, dataset$mpasivos_margen_rank / dataset$ctrx_quarter_normalizado)]
-  dataset[, impo_20 := ifelse(dataset$Visa_mpagospesos_rank == 0 | is.na(dataset$mpasivos_margen_rank), 0, dataset$mpasivos_margen_rank / dataset$Visa_mpagospesos_rank)]
-  dataset[, impo_21 := ifelse(dataset$mcaja_ahorro_rank_lag1 == 0 | is.na(dataset$mpasivos_margen_rank), 0, dataset$mpasivos_margen_rank / dataset$mcaja_ahorro_rank_lag1)]
-  dataset[, impo_22 := ifelse(dataset$ctrx_quarter == 0 | is.na(dataset$mpasivos_margen_rank), 0, dataset$mpasivos_margen_rank / dataset$ctrx_quarter)]
-  dataset[, impo_23 := ifelse(dataset$mcaja_ahorro_rank == 0 | is.na(dataset$mpasivos_margen_rank), 0, dataset$mpasivos_margen_rank / dataset$mcaja_ahorro_rank)]
-  dataset[, impo_24 := ifelse(dataset$mpayroll_sobre_edad_rank == 0 | is.na(dataset$mpasivos_margen_rank), 0, dataset$mpasivos_margen_rank / dataset$mpayroll_sobre_edad_rank)]
-  dataset[, impo_25 := ifelse(dataset$mtarjeta_visa_consumo_rank == 0 | is.na(dataset$mpasivos_margen_rank), 0, dataset$mpasivos_margen_rank / dataset$mtarjeta_visa_consumo_rank)]
-  dataset[, impo_26 := ifelse(dataset$mautoservicio_rank == 0 | is.na(dataset$mpasivos_margen_rank), 0, dataset$mpasivos_margen_rank / dataset$mautoservicio_rank)]
-  dataset[, impo_27 := ifelse(dataset$mpayroll_sobre_edad_rank_lag2 == 0 | is.na(dataset$mpasivos_margen_rank), 0, dataset$mpasivos_margen_rank / dataset$mpayroll_sobre_edad_rank_lag2)]
+  #visa_status05/
+  dataset[, impo_16 := vm_status05 / ctrx_quarter_normalizado]
+  dataset[, impo_17 := vm_status05 / ctrx_quarter ]
+  dataset[, impo_18 := vm_status05 / Visa_status]
+  dataset[, impo_19 := vm_status05 / vm_status01]
+  dataset[, impo_20 := vm_status05 / vmr_mpagominimo]
   
-  # mcaja_ahorro_rank_lag1
-  dataset[, impo_28 := ifelse(dataset$ctrx_quarter_normalizado == 0 | is.na(dataset$mcaja_ahorro_rank_lag1), 0, dataset$mcaja_ahorro_rank_lag1 / dataset$ctrx_quarter_normalizado)]
-  dataset[, impo_29 := ifelse(dataset$Visa_mpagospesos_rank == 0 | is.na(dataset$mcaja_ahorro_rank_lag1), 0, dataset$mcaja_ahorro_rank_lag1 / dataset$Visa_mpagospesos_rank)]
-  dataset[, impo_30 := ifelse(dataset$mpasivos_margen_rank == 0 | is.na(dataset$mcaja_ahorro_rank_lag1), 0, dataset$mcaja_ahorro_rank_lag1 / dataset$mpasivos_margen_rank)]
-  dataset[, impo_31 := ifelse(dataset$ctrx_quarter == 0 | is.na(dataset$mcaja_ahorro_rank_lag1), 0, dataset$mcaja_ahorro_rank_lag1 / dataset$ctrx_quarter)]
-  dataset[, impo_32 := ifelse(dataset$mcaja_ahorro_rank == 0 | is.na(dataset$mcaja_ahorro_rank_lag1), 0, dataset$mcaja_ahorro_rank_lag1 / dataset$mcaja_ahorro_rank)]
-  dataset[, impo_33 := ifelse(dataset$mpayroll_sobre_edad_rank == 0 | is.na(dataset$mcaja_ahorro_rank_lag1), 0, dataset$mcaja_ahorro_rank_lag1 / dataset$mpayroll_sobre_edad_rank)]
-  dataset[, impo_34 := ifelse(dataset$mtarjeta_visa_consumo_rank == 0 | is.na(dataset$mcaja_ahorro_rank_lag1), 0, dataset$mcaja_ahorro_rank_lag1 / dataset$mtarjeta_visa_consumo_rank)]
-  dataset[, impo_35 := ifelse(dataset$mautoservicio_rank == 0 | is.na(dataset$mcaja_ahorro_rank_lag1), 0, dataset$mcaja_ahorro_rank_lag1 / dataset$mautoservicio_rank)]
-  dataset[, impo_36 := ifelse(dataset$mpayroll_sobre_edad_rank_lag2 == 0 | is.na(dataset$mcaja_ahorro_rank_lag1), 0, dataset$mcaja_ahorro_rank_lag1 / dataset$mpayroll_sobre_edad_rank_lag2)]
+  #visa_status01/
+  dataset[, impo_21 := vm_status01 / ctrx_quarter_normalizado]
+  dataset[, impo_22 := vm_status01 / ctrx_quarter ]
+  dataset[, impo_23 := vm_status01 / Visa_status]
+  dataset[, impo_24 := vm_status01 / vm_status05]
+  dataset[, impo_25 := vm_status01 / vmr_mpagominimo]
   
-  # mpayroll_sobre_edad_rank
-  dataset[, impo_36 := ifelse(dataset$ctrx_quarter_normalizado == 0 | is.na(dataset$mpayroll_sobre_edad_rank), 0, dataset$mpayroll_sobre_edad_rank / dataset$ctrx_quarter_normalizado)]
-  dataset[, impo_37 := ifelse(dataset$Visa_mpagospesos_rank == 0 | is.na(dataset$mpayroll_sobre_edad_rank), 0, dataset$mpayroll_sobre_edad_rank / dataset$Visa_mpagospesos_rank)]
-  dataset[, impo_38 := ifelse(dataset$mpasivos_margen_rank == 0 | is.na(dataset$mpayroll_sobre_edad_rank), 0, dataset$mpayroll_sobre_edad_rank / dataset$mpasivos_margen_rank)]
-  dataset[, impo_39 := ifelse(dataset$ctrx_quarter == 0 | is.na(dataset$mpayroll_sobre_edad_rank), 0, dataset$mpayroll_sobre_edad_rank / dataset$ctrx_quarter)]
-  dataset[, impo_40 := ifelse(dataset$mcaja_ahorro_rank == 0 | is.na(dataset$mpayroll_sobre_edad_rank), 0, dataset$mpayroll_sobre_edad_rank / dataset$mcaja_ahorro_rank)]
-  dataset[, impo_41 := ifelse(dataset$mcaja_ahorro_rank_lag1 == 0 | is.na(dataset$mpayroll_sobre_edad_rank), 0, dataset$mpayroll_sobre_edad_rank / dataset$mcaja_ahorro_rank_lag1)]
-  dataset[, impo_42 := ifelse(dataset$mtarjeta_visa_consumo_rank == 0 | is.na(dataset$mpayroll_sobre_edad_rank), 0, dataset$mpayroll_sobre_edad_rank / dataset$mtarjeta_visa_consumo_rank)]
-  dataset[, impo_43 := ifelse(dataset$mautoservicio_rank == 0 | is.na(dataset$mpayroll_sobre_edad_rank), 0, dataset$mpayroll_sobre_edad_rank / dataset$mautoservicio_rank)]
-  dataset[, impo_44 := ifelse(dataset$mpayroll_sobre_edad_rank_lag2 == 0 | is.na(dataset$mpayroll_sobre_edad_rank), 0, dataset$mpayroll_sobre_edad_rank / dataset$mpayroll_sobre_edad_rank_lag2)]
+  #vmr_mpagominimo/
+  dataset[, impo_26 := vmr_mpagominimo / ctrx_quarter_normalizado]
+  dataset[, impo_27 := vmr_mpagominimo / ctrx_quarter ]
+  dataset[, impo_28 := vmr_mpagominimo / Visa_status]
+  dataset[, impo_29 := vmr_mpagominimo / vm_status05]
+  dataset[, impo_30 := vmr_mpagominimo / vm_status01]
   
   
   # valvula de seguridad para evitar valores infinitos

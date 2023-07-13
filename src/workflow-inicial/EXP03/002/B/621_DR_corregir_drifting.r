@@ -125,6 +125,54 @@ AgregarVariables_IntraMes <- function(dataset) {
   
 
   
+  # Aqui debe usted agregar sus propias nuevas variables
+  # variables nuevas: cociente de las 5 "primer orden" + importantes del E1
+  
+  #numeradores/
+  #ctrx_quarter_normalizado 
+  dataset[, impo_01 := ctrx_quarter_normalizado / ctrx_quarter]
+  dataset[, impo_02 := ctrx_quarter_normalizado / Visa_status]
+  dataset[, impo_03 := ctrx_quarter_normalizado / vm_status05]
+  dataset[, impo_04 := ctrx_quarter_normalizado / vm_status01]
+  dataset[, impo_05 := ctrx_quarter_normalizado / vmr_mpagominimo]
+  
+  #ctrx_quarter/
+  dataset[, impo_06 := ctrx_quarter / ctrx_quarter_normalizado]
+  dataset[, impo_07 := ctrx_quarter / Visa_status]
+  dataset[, impo_08 := ctrx_quarter / vm_status05]
+  dataset[, impo_09 := ctrx_quarter / vm_status01]
+  dataset[, impo_10 := ctrx_quarter / vmr_mpagominimo]
+  
+  
+  #visa_status/
+  dataset[, impo_11 := Visa_status / ctrx_quarter_normalizado]
+  dataset[, impo_12 := Visa_status / ctrx_quarter ]
+  dataset[, impo_13 := Visa_status / vm_status05]
+  dataset[, impo_14 := Visa_status / vm_status01]
+  dataset[, impo_15 := Visa_status / vmr_mpagominimo]
+  
+  #visa_status05/
+  dataset[, impo_16 := vm_status05 / ctrx_quarter_normalizado]
+  dataset[, impo_17 := vm_status05 / ctrx_quarter ]
+  dataset[, impo_18 := vm_status05 / Visa_status]
+  dataset[, impo_19 := vm_status05 / vm_status01]
+  dataset[, impo_20 := vm_status05 / vmr_mpagominimo]
+  
+  #visa_status01/
+  dataset[, impo_21 := vm_status01 / ctrx_quarter_normalizado]
+  dataset[, impo_22 := vm_status01 / ctrx_quarter ]
+  dataset[, impo_23 := vm_status01 / Visa_status]
+  dataset[, impo_24 := vm_status01 / vm_status05]
+  dataset[, impo_25 := vm_status01 / vmr_mpagominimo]
+  
+  ##vmr_mpagominimo/
+  dataset[, impo_26 := vmr_mpagominimo / ctrx_quarter_normalizado]
+  dataset[, impo_27 := vmr_mpagominimo / ctrx_quarter ]
+  dataset[, impo_28 := vmr_mpagominimo / Visa_status]
+  dataset[, impo_29 := vmr_mpagominimo / vm_status05]
+  dataset[, impo_30 := vmr_mpagominimo / vm_status01]
+  
+  
   
   
   #fin por ahora de variables SP segunda tanda 20230704
