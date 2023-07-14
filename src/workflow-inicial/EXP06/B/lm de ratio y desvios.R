@@ -24,7 +24,7 @@ model <- glm(GananciaPromedio ~ Ratio + DesvSTD, data = df, family = Gamma(link 
 summary(model)
 
 # Obtain predicted values
-df$predicted <- predict(model)
+df$predicted2 <- predict(model)
 
 # You can also extract the estimated coefficients
 coefs <- coef(model)
