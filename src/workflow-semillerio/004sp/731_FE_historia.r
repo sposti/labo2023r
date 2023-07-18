@@ -26,7 +26,7 @@ PARAM$lag2 <- TRUE
 PARAM$lag3 <- FALSE
 
 PARAM$Tendencias1$run <- TRUE
-PARAM$Tendencias1$ventana <- 3
+PARAM$Tendencias1$ventana <- 6
 PARAM$Tendencias1$tendencia <- TRUE
 PARAM$Tendencias1$minimo <- FALSE
 PARAM$Tendencias1$maximo <- FALSE
@@ -34,7 +34,7 @@ PARAM$Tendencias1$promedio <- TRUE
 PARAM$Tendencias1$ratioavg <- FALSE
 PARAM$Tendencias1$ratiomax <- FALSE
 
-PARAM$Tendencias2$run <- TRUE
+PARAM$Tendencias2$run <- FALSE
 PARAM$Tendencias2$ventana <- 6
 PARAM$Tendencias2$tendencia <- TRUE
 PARAM$Tendencias2$minimo <- FALSE
@@ -45,10 +45,10 @@ PARAM$Tendencias2$ratiomax <- FALSE
 
 
 PARAM$RandomForest$run <- TRUE
-PARAM$RandomForest$num.trees <- 300
-PARAM$RandomForest$max.depth <- 8
-PARAM$RandomForest$min.node.size <- 700
-PARAM$RandomForest$mtry <- 75
+PARAM$RandomForest$num.trees <- 66
+PARAM$RandomForest$max.depth <- 6
+PARAM$RandomForest$min.node.size <- 666
+PARAM$RandomForest$mtry <- 66
 PARAM$RandomForest$semilla <- 666667 # cambiar por la propia semilla
 
 
@@ -342,7 +342,7 @@ GVEZ <- 1
 
 CanaritosAsesinos <- function(
     canaritos_ratio = 0.2,
-    canaritos_desvios = 3.0, canaritos_semilla = 666683) {
+    canaritos_desvios = 2.0, canaritos_semilla = 666683) {
   gc()
   dataset[, clase01 := ifelse(clase_ternaria == "CONTINUA", 0, 1)]
 
@@ -401,7 +401,7 @@ CanaritosAsesinos <- function(
     learning_rate = 0.065,
     feature_fraction = 1.0, # lo seteo en 1
     min_data_in_leaf = 520,
-    num_leaves = 60,
+    num_leaves = 66,
     early_stopping_rounds = 200,
     num_threads = 1
   )
