@@ -11,7 +11,7 @@ require("yaml")
 
 # Parametros del script
 PARAM <- list()
-PARAM$experimento <- "TS7410_012sp"
+PARAM$experimento <- "TS7410_013sp"
 
 PARAM$exp_input <- "FE7310_012sp"
 
@@ -52,7 +52,7 @@ PARAM$train$testing <- c(
 
 # Atencion  0.4  de  undersampling de la clase mayoritaria,  los CONTINUA
 # 1.0 significa NO undersampling ,  0.1  es quedarse con el 10% de los CONTINUA
-PARAM$train$undersampling <- 0.1
+PARAM$train$undersampling <- 0.2
 
 PARAM$train$semilla <- 666667 # cambiar por su propia semilla  !!!
 
