@@ -9,7 +9,7 @@ require("data.table")
 require("yaml")
 
 
-# Parametros del script
+# Parametros del script --SP
 PARAM <- list()
 PARAM$experimento <- "TS7410_014sp"
 
