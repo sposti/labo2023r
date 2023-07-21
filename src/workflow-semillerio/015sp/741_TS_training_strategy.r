@@ -43,7 +43,7 @@ PARAM$train$validation <- c(
 
 
 PARAM$train$testing <- c(  
-  202107, 202105, 202103
+  202106, 202105
   )
 
 
