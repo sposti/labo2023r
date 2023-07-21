@@ -43,8 +43,11 @@ PARAM$train$validation <- c(
 
 
 PARAM$train$testing <- c(  
-  202107, 202105, 202103
-  )
+  202107, 202106, 202105, 202104, 202103, 
+  202102, 202101, 202012, 202011, 202010, 
+  202009, 202008, 202002, 202001, 201912,
+  201911, 201910, 201909
+)
 
 
 # Atencion  0.4  de  undersampling de la clase mayoritaria,  los CONTINUA
