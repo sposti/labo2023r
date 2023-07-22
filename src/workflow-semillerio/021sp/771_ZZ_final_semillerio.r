@@ -36,7 +36,7 @@ PARAM$semillerio <- 116
 PARAM$semilla_primos <- 666707
 
 PARAM$kaggle$envios_desde <- 10000L
-PARAM$kaggle$envios_hasta <- 12000L
+PARAM$kaggle$envios_hasta <- 13500L
 PARAM$kaggle$envios_salto <- 500L
 
 PARAM$graficar$envios_hasta <- 20000L # para el caso que deba graficar
