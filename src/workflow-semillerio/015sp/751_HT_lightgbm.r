@@ -27,7 +27,7 @@ options(error = function() {
 
 # Parametros del script
 PARAM <- list()
-PARAM$experimento <- "HT7510_015sp"
+PARAM$experimento <- "HT7510_015sp"  ##sp15
 
 PARAM$exp_input <- "TS7410_015sp"
 
@@ -48,10 +48,10 @@ PARAM$lgb_basicos <- list(
   force_row_wise = TRUE, # para reducir warnings
   verbosity = -100,
   max_depth = 8.0, #-1L, # -1 significa no limitar,  por ahora lo dejo fijo
-  #min_gain_to_split = 2.0, # min_gain_to_split >= 0.0
+  min_gain_to_split = 0.0, # min_gain_to_split >= 0.0
   min_sum_hessian_in_leaf = 0.001, #  min_sum_hessian_in_leaf >= 0.0
-  #lambda_l1 = 0.1, # lambda_l1 >= 0.0
-  #lambda_l2 = 0.1, # lambda_l2 >= 0.0
+  lambda_l1 = 0.0, # lambda_l1 >= 0.0
+  lambda_l2 = 0.0, # lambda_l2 >= 0.0
   max_bin = 31L, # lo debo dejar fijo, no participa de la BO
   num_iterations = 9999, # un numero muy grande, lo limita early_stopping_rounds
 
