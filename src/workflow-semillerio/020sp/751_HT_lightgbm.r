@@ -27,9 +27,9 @@ options(error = function() {
 
 # Parametros del script
 PARAM <- list()
-PARAM$experimento <- "HT7510_016sp"
+PARAM$experimento <- "HT7510_010sp"
 
-PARAM$exp_input <- "TS7410_016sp"
+PARAM$exp_input <- "TS7410_010sp"
 
 # En caso que se haga cross validation, se usa esta cantidad de folds
 PARAM$lgb_crossvalidation_folds <- 5
@@ -48,18 +48,18 @@ PARAM$lgb_basicos <- list(
   force_row_wise = TRUE, # para reducir warnings
   verbosity = -100,
   max_depth = 8.0, #-1L, # -1 significa no limitar,  por ahora lo dejo fijo
-  min_gain_to_split = 2.0, # min_gain_to_split >= 0.0
+  min_gain_to_split = 3.0, # min_gain_to_split >= 0.0
   min_sum_hessian_in_leaf = 0.001, #  min_sum_hessian_in_leaf >= 0.0
   lambda_l1 = 0.1, # lambda_l1 >= 0.0
   lambda_l2 = 0.1, # lambda_l2 >= 0.0
   max_bin = 31L, # lo debo dejar fijo, no participa de la BO
   num_iterations = 9999, # un numero muy grande, lo limita early_stopping_rounds
 
-  bagging_fraction = 0.1, # 0.0 < bagging_fraction <= 1.0
-  pos_bagging_fraction = 0.1, # 0.0 < pos_bagging_fraction <= 1.0
+  bagging_fraction = 0.8, # 0.0 < bagging_fraction <= 1.0
+  pos_bagging_fraction = 0.9, # 0.0 < pos_bagging_fraction <= 1.0
   neg_bagging_fraction = 0.1, # 0.0 < neg_bagging_fraction <= 1.0
   is_unbalance = TRUE, #
-  scale_pos_weight = 0.1, # scale_pos_weight > 0.0
+  scale_pos_weight = 1.0, # scale_pos_weight > 0.0
 
   drop_rate = 0.1, # 0.0 < neg_bagging_fraction <= 1.0
   max_drop = 50, # <=0 means no limit
@@ -82,7 +82,7 @@ PARAM$bo_lgb <- makeParamSet(
 
 
 # si usted es ambicioso, y tiene paciencia, podria subir este valor a 100
-PARAM$bo_iteraciones <- 50 # iteraciones de la Optimizacion Bayesiana
+PARAM$bo_iteraciones <- 66 # iteraciones de la Optimizacion Bayesiana
 
 PARAM$home <- "~/buckets/b1/"
 
