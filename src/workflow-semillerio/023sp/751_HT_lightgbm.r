@@ -48,10 +48,10 @@ PARAM$lgb_basicos <- list(
   force_row_wise = TRUE, # para reducir warnings
   verbosity = -100,
   max_depth = 8.0, #-1L, # -1 significa no limitar,  por ahora lo dejo fijo
-  min_gain_to_split = 3.0, # min_gain_to_split >= 0.0
+  min_gain_to_split = 9.9469, # min_gain_to_split >= 0.0
   min_sum_hessian_in_leaf = 0.001, #  min_sum_hessian_in_leaf >= 0.0
-  lambda_l1 = 0.1, # lambda_l1 >= 0.0
-  lambda_l2 = 0.1, # lambda_l2 >= 0.0
+  lambda_l1 = 174.8350, # lambda_l1 >= 0.0
+  lambda_l2 = 57.7876, # lambda_l2 >= 0.0
   max_bin = 31L, # lo debo dejar fijo, no participa de la BO
   num_iterations = 2442, # un numero muy grande, lo limita early_stopping_rounds
 
@@ -71,20 +71,9 @@ PARAM$lgb_basicos <- list(
   learning_rate = 0.0216,
   feature_fraction = 0.9885,
   num_leaves = 240,
-  min_data_in_leaf = 104,
-  lambda_l1 = 174.8350,
-  lambda_l2 = 57.7876,
-  min_gain_to_split = 9.9469
+  min_data_in_leaf = 104
 
   
-
-  
-
-  
-  
-
-
-
 )
 
 
@@ -92,7 +81,7 @@ PARAM$lgb_basicos <- list(
 #  en la Bayesian Optimization
 PARAM$bo_lgb <- makeParamSet(
   #makeNumericParam("", lower = 0.02, upper = 0.3)
-  makeIntegerParam("max_depth", lower = 3L, upper = 12L)
+  makeIntegerParam("max_depth", lower = 4L, upper = 10L)
   #makeNumericParam("learning_rate", lower = 0.02, upper = 0.3),
   #makeNumericParam("feature_fraction", lower = 0.1, upper = 1.0),
   #makeIntegerParam("num_leaves", lower = 8L, upper = 1024L),
