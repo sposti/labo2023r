@@ -85,7 +85,7 @@ PARAM$bo_lgb <- makeParamSet(
   #makeIntegerParam("max_depth", lower = 4L, upper = 10L)
   #makeNumericParam("learning_rate", lower = 0.02, upper = 0.3),
   #makeNumericParam("feature_fraction", lower = 0.1, upper = 1.0),
-  makeIntegerParam("max_depth", lower = 4L, upper = 10L),
+  makeIntegerParam("max_depth", lower = 4L, upper = 10L)
   #makeIntegerParam("min_data_in_leaf", lower = 100L, upper = 50000L),
   #makeNumericParam("lambda_l1", lower = 0.01, upper = 200.0),
   #makeNumericParam("lambda_l2", lower = 0.01, upper = 200.0),
