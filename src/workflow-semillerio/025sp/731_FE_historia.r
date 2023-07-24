@@ -17,9 +17,9 @@ require("lightgbm")
 
 # Parametros del script
 PARAM <- list()
-PARAM$experimento <- "FE7310_021sp"
+PARAM$experimento <- "FE7310_025sp"
 
-PARAM$exp_input <- "DR7210_021sp"
+PARAM$exp_input <- "DR7210_025sp"
 
 PARAM$lag1 <- TRUE
 PARAM$lag2 <- TRUE
@@ -31,31 +31,31 @@ PARAM$Tendencias1$tendencia <- TRUE
 PARAM$Tendencias1$minimo <- FALSE
 PARAM$Tendencias1$maximo <- FALSE
 PARAM$Tendencias1$promedio <- TRUE
-PARAM$Tendencias1$ratioavg <- FALSE
+PARAM$Tendencias1$ratioavg <- TRUE
 PARAM$Tendencias1$ratiomax <- FALSE
 
 PARAM$Tendencias2$run <- FALSE
-PARAM$Tendencias2$ventana <- 6
+PARAM$Tendencias2$ventana <- 9
 PARAM$Tendencias2$tendencia <- TRUE
 PARAM$Tendencias2$minimo <- FALSE
 PARAM$Tendencias2$maximo <- FALSE
 PARAM$Tendencias2$promedio <- TRUE
-PARAM$Tendencias2$ratioavg <- FALSE
+PARAM$Tendencias2$ratioavg <- TRUE
 PARAM$Tendencias2$ratiomax <- FALSE
 
 
 PARAM$RandomForest$run <- TRUE
 PARAM$RandomForest$num.trees <- 66
 PARAM$RandomForest$max.depth <- 6
-PARAM$RandomForest$min.node.size <- 666
-PARAM$RandomForest$mtry <- 66
+PARAM$RandomForest$min.node.size <- 2666
+PARAM$RandomForest$mtry <- 96
 PARAM$RandomForest$semilla <- 666667 # cambiar por la propia semilla
 
 
 # varia de 0.0 a 2.0, si es 0.0 NO se activan
 PARAM$CanaritosAsesinos$ratio <- 0.66
 # desvios estandar de la media, para el cutoff
-PARAM$CanaritosAsesinos$desvios <- 2
+PARAM$CanaritosAsesinos$desvios <- 4
 # cambiar por la propia semilla
 PARAM$CanaritosAsesinos$semilla <- 666671
 
