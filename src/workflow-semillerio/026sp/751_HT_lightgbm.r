@@ -54,17 +54,17 @@ PARAM$lgb_basicos <- list(
   lambda_l2 = 0.1, # lambda_l2 >= 0.0
   max_bin = 31L, # lo debo dejar fijo, no participa de la BO
   num_iterations = 9999, # un numero muy grande, lo limita early_stopping_rounds
-  learning_rate = 0.02,
-  bagging_fraction = 0.6, # 0.0 < bagging_fraction <= 1.0
+  learning_rate = 0.06,
+  #bagging_fraction = 0.6, # 0.0 < bagging_fraction <= 1.0
   pos_bagging_fraction = 0.6, # 0.0 < pos_bagging_fraction <= 1.0
   neg_bagging_fraction = 0.6, # 0.0 < neg_bagging_fraction <= 1.0
   is_unbalance = FALSE, #
   scale_pos_weight = 1.0, # scale_pos_weight > 0.0
-  num_leaves = 2047,
+  num_leaves = 256,
   drop_rate = 0.1, # 0.0 < neg_bagging_fraction <= 1.0
   max_drop = 50, # <=0 means no limit
   skip_drop = 0.5, # 0.0 <= skip_drop <= 1.0
-  min_data_in_leaf = 4095,
+  min_data_in_leaf = 666,
   extra_trees = TRUE, # Magic Sauce
 
   seed = PARAM$lgb_semilla
