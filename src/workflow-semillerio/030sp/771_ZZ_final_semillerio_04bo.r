@@ -20,12 +20,12 @@ require("lightgbm")
 
 # Parametros del script
 PARAM <- list()
-PARAM$experimento <- "ZZ7710_021sp_48bo"
-PARAM$exp_input <- "HT7510_021sp"
+PARAM$experimento <- "ZZ7710_030sp_04bo"
+PARAM$exp_input <- "HT7510_030sp"
 
 # Que modelos quiero, segun su posicion en el ranking
 # de la Bayesian Optimizacion, ordenado por ganancia descendente
-PARAM$modelos_rank <- c(48)
+PARAM$modelos_rank <- c(4)
 
 # cantidad de semillas a utilizar en el semillerio,
 #  podrian ser 50 o 100 para mayor estabilidad
@@ -33,7 +33,7 @@ PARAM$modelos_rank <- c(48)
 PARAM$semillerio <- 50
 
 # se utiliza para generar el vector de  PARAM$semillerio  semillas
-PARAM$semilla_primos <- 666707
+PARAM$semilla_primos <- 666667
 
 PARAM$kaggle$envios_desde <- 10000L
 PARAM$kaggle$envios_hasta <- 12000L
@@ -72,11 +72,11 @@ ImprimirGraficos <- function(
     na.rm = TRUE,
     hasNA = TRUE
   )]
-
+  
   ganancia_suavizada_max <- tb_ganancias[, max(gan_suavizada, na.rm = TRUE)]
-
+  
   ymax <- max(tb_ganancias, na.rm = TRUE) * 1.05
-
+  
   arch_grafico <- paste0(
     "modelo_",
     sprintf("%02d", modelo_rank),
@@ -84,9 +84,9 @@ ImprimirGraficos <- function(
     sprintf("%03d", iteracion_bayesiana),
     ".pdf"
   )
-
+  
   pdf(arch_grafico)
-
+  
   # primera curva
   plot(
     x = tb_ganancias[, envios],
@@ -103,7 +103,7 @@ ImprimirGraficos <- function(
     ylab = "Ganancia",
     panel.first = grid()
   )
-
+  
   # las siguientes curvas
   if (qsemillas > 1) {
     for (s in 2:qsemillas)
@@ -115,17 +115,17 @@ ImprimirGraficos <- function(
       )
     }
   }
-
+  
   # finalmente la curva promedio
   lines(
     x = tb_ganancias[, envios],
     y = tb_ganancias[, ganancia_acum],
     col = "red"
   )
-
+  
   dev.off()
-
-
+  
+  
   # grabo las ganancias, para poderlas comparar con OTROS modelos
   arch_ganancias <- paste0(
     "ganancias_",
@@ -134,10 +134,10 @@ ImprimirGraficos <- function(
     sprintf("%03d", iteracion_bayesiana),
     ".txt"
   )
-
+  
   fwrite(tb_ganancias,
-    file = arch_ganancias,
-    sep = "\t",
+         file = arch_ganancias,
+         sep = "\t",
   )
 }
 #------------------------------------------------------------------------------
@@ -152,8 +152,8 @@ GenerarKaggle <- function(
     to = PARAM$kaggle$envios_hasta,
     by = PARAM$kaggle$envios_salto
   )
-
-
+  
+  
   # genero los archivos por probabilidad
   for (campo in c("prob"))
   {
@@ -163,7 +163,7 @@ GenerarKaggle <- function(
     {
       tb_prediccion[, Predicted := 0L]
       tb_prediccion[1:corte, Predicted := 1L]
-
+      
       nom_submit <- paste0(
         PARAM$experimento,
         "_",
@@ -177,12 +177,12 @@ GenerarKaggle <- function(
         sprintf("%03d", sem),
         ".csv"
       )
-
+      
       fwrite(tb_prediccion[, list(numero_de_cliente, Predicted)],
-        file = nom_submit,
-        sep = ","
+             file = nom_submit,
+             sep = ","
       )
-
+      
       if (sem > 1) {
         nom_old <- paste0(
           PARAM$experimento,
@@ -197,7 +197,7 @@ GenerarKaggle <- function(
           sprintf("%03d", sem - 1), # old
           ".csv"
         )
-
+        
         file.rename(
           paste0("./", nom_old),
           paste0("./old/", nom_old)
@@ -212,16 +212,16 @@ GenerarKaggle <- function(
 grabar_importancia <- function(modelo_final, modelo_rank, iteracion_bayesiana) {
   tb_importancia <- as.data.table(lgb.importance(modelo_final))
   fwrite(tb_importancia,
-    file = paste0(
-      "impo_",
-      sprintf("%02d", modelo_rank),
-      "_",
-      sprintf("%03d", iteracion_bayesiana),
-      ".txt"
-    ),
-    sep = "\t"
+         file = paste0(
+           "impo_",
+           sprintf("%02d", modelo_rank),
+           "_",
+           sprintf("%03d", iteracion_bayesiana),
+           ".txt"
+         ),
+         sep = "\t"
   )
-
+  
   rm(tb_importancia)
 }
 #------------------------------------------------------------------------------
@@ -291,11 +291,11 @@ for (modelo_rank in PARAM$modelos_rank)
   imodelo <- imodelo + 1L
   cat("\nmodelo_rank: ", modelo_rank, ", semillas: ")
   OUTPUT$status$modelo_rank <- modelo_rank
-
+  
   parametros <- as.list(copy(tb_log[modelo_rank]))
   iteracion_bayesiana <- parametros$iteracion_bayesiana
-
-
+  
+  
   # creo CADA VEZ el dataset de lightgbm
   dtrain <- lgb.Dataset(
     data = data.matrix(dataset[, campos_buenos, with = FALSE]),
@@ -303,9 +303,9 @@ for (modelo_rank in PARAM$modelos_rank)
     weight = dataset[, ifelse(clase_ternaria %in% c("BAJA+2"), 1.0000001, 1.0)],
     free_raw_data = FALSE
   )
-
+  
   ganancia <- parametros$ganancia
-
+  
   # elimino los parametros que no son de lightgbm
   parametros$experimento <- NULL
   parametros$cols <- NULL
@@ -314,14 +314,14 @@ for (modelo_rank in PARAM$modelos_rank)
   parametros$estimulos <- NULL
   parametros$ganancia <- NULL
   parametros$iteracion_bayesiana <- NULL
-
+  
   #  parametros$num_iterations  <- 10  # esta linea es solo para pruebas en desarrollo
-
+  
   if (future_con_clase) {
     tb_ganancias <- as.data.table(list("envios" = 1:1:PARAM$graficar$envios_hasta))
     tb_ganancias[, gan_sum := 0.0]
   }
-
+  
   # inicializo  tb_prediccion
   tb_prediccion <- dfuture[, list(numero_de_cliente, foto_mes, clase_ternaria)]
   tb_prediccion[, pos := .I]
@@ -330,33 +330,33 @@ for (modelo_rank in PARAM$modelos_rank)
   tb_prediccion[, sum_prob_acumulada := 0]
   # aqui voy a acumular el ranking del semillerio
   tb_prediccion[, sum_rank_acumulado := 0]
-
+  
   sem <- 0L
-
+  
   for (vsemilla in ksemillas) # recorro las semillas del Semillerio
   {
     sem <- sem + 1L
     cat(sem, " ")
     OUTPUT$status$sem <- sem
     GrabarOutput()
-
+    
     setorder(tb_prediccion, pos) # ordeno por el original
-
+    
     # Utilizo la semilla definida en este script
     parametros$seed <- vsemilla
-
+    
     nombre_raiz <- paste0(
       sprintf("%02d", modelo_rank),
       "_",
       sprintf("%03d", iteracion_bayesiana)
     )
-
+    
     arch_modelo <- paste0(
       "modelo_",
       nombre_raiz,
       ".model"
     )
-
+    
     # genero el modelo entrenando en los datos finales
     set.seed(parametros$seed, kind = "L'Ecuyer-CMRG")
     modelo_final <- lightgbm(
@@ -364,65 +364,65 @@ for (modelo_rank in PARAM$modelos_rank)
       param = parametros,
       verbose = -100
     )
-
+    
     # grabo el modelo, achivo .model
     lgb.save(modelo_final,
-      file = arch_modelo
+             file = arch_modelo
     )
-
+    
     # creo y grabo la importancia de variables, solo para la primer semilla
     if (sem == 1) {
       grabar_importancia(modelo_final, modelo_rank, iteracion_bayesiana)
     }
-
+    
     # genero la prediccion, Scoring
     prediccion <- predict(
       modelo_final,
       data.matrix(dfuture[, campos_buenos, with = FALSE])
     )
-
+    
     tb_prediccion[, prob_semilla := prediccion]
     tb_prediccion[, rank_semilla := frank(prediccion, ties.method = "random")]
     tb_prediccion[, sum_prob_acumulada := sum_prob_acumulada + prediccion]
     tb_prediccion[, sum_rank_acumulado := sum_rank_acumulado + frank(prediccion, ties.method = "random")]
-
+    
     tb_prediccion[, semillas := sem]
     tb_prediccion[, prob := sum_prob_acumulada / semillas]
     tb_prediccion[, ranking := sum_rank_acumulado / semillas]
-
+    
     fwrite(tb_prediccion[, list(numero_de_cliente, foto_mes, semillas, prob, ranking, clase_ternaria)],
-      file = paste0("pred_", nombre_raiz, ".csv"),
-      sep = "\t"
+           file = paste0("pred_", nombre_raiz, ".csv"),
+           sep = "\t"
     )
-
+    
     if (!future_con_clase) {
       GenerarKaggle(tb_prediccion, modelo_rank, iteracion_bayesiana, sem)
     }
-
-
+    
+    
     if (future_con_clase) {
       setorder(tb_prediccion, -prob_semilla)
-
+      
       tb_ganancias[, paste0("g", sem) := tb_prediccion[
         1:PARAM$graficar$envios_hasta,
         cumsum(ifelse(clase_ternaria == "BAJA+2", 117000, -3000))
       ]]
-
+      
       setorder(tb_prediccion, -prob)
-
+      
       tb_ganancias[, ganancia_acum := tb_prediccion[
         1:PARAM$graficar$envios_hasta,
         cumsum(ifelse(clase_ternaria == "BAJA+2", 117000, -3000))
       ]]
-
+      
       ImprimirGraficos(tb_ganancias, modelo_rank, iteracion_bayesiana, sem)
     }
-
+    
     # borro y limpio la memoria para la vuelta siguiente del for
     rm(modelo_final)
     gc()
   } # end del for semillas
-
+  
   rm(tb_ganancias)
   # impresion ganancias
   rm(dtrain)
@@ -440,6 +440,6 @@ GrabarOutput()
 
 # dejo la marca final
 cat(format(Sys.time(), "%Y%m%d %H%M%S"), "\n",
-  file = "zRend.txt",
-  append = TRUE
+    file = "zRend.txt",
+    append = TRUE
 )
