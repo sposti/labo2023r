@@ -116,8 +116,8 @@ AgregarVariables_IntraMes <- function(dataset) {
 
   # Aqui debe usted agregar sus propias nuevas variables
   
-  dataset[, r_alta_master := Master_fechaalta / (cliente_antiguedad * 30)]
-  dataset[, r_alta_visa := Visa_fechaalta / (cliente_antiguedad * 30)]
+  dataset[, r_time_alta_master := Master_fechaalta / (cliente_antiguedad * 30)]
+  dataset[, r_time_alta_visa := Visa_fechaalta / (cliente_antiguedad * 30)]
   dataset[, vmr_pagominimo_saldo := rowSums(cbind(ifelse(vm_msaldototal == 0, 0, vm_mpagominimo / vm_msaldototal)), na.rm = TRUE)] #ratio utilizacion TC
   dataset[, c_deb_aut := rowSums(cbind(ccuenta_debitos_automaticos, ctarjeta_visa_debitos_automaticos, ctarjeta_master_debitos_automaticos), na.rm = TRUE)] #campo debitos autmaticos
   dataset[, m_deb_aut := rowSums(cbind(mcuenta_debitos_automaticos, mttarjeta_visa_debitos_automaticos, mttarjeta_master_debitos_automaticos), na.rm = TRUE)] #campo debitos autmaticos
