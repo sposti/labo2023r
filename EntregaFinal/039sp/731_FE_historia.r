@@ -17,9 +17,9 @@ require("lightgbm")
 
 # Parametros del script
 PARAM <- list()
-PARAM$experimento <- "FE7310_021sp"
+PARAM$experimento <- "FE7310_039sp"
 
-PARAM$exp_input <- "DR7210_021sp"
+PARAM$exp_input <- "DR7210_039sp"
 
 PARAM$lag1 <- TRUE
 PARAM$lag2 <- TRUE
@@ -34,21 +34,21 @@ PARAM$Tendencias1$promedio <- TRUE
 PARAM$Tendencias1$ratioavg <- FALSE
 PARAM$Tendencias1$ratiomax <- FALSE
 
-PARAM$Tendencias2$run <- FALSE
-PARAM$Tendencias2$ventana <- 6
-PARAM$Tendencias2$tendencia <- TRUE
-PARAM$Tendencias2$minimo <- FALSE
-PARAM$Tendencias2$maximo <- FALSE
-PARAM$Tendencias2$promedio <- TRUE
-PARAM$Tendencias2$ratioavg <- FALSE
-PARAM$Tendencias2$ratiomax <- FALSE
+PARAM$Tendencias1$run <- FALSE
+PARAM$Tendencias1$ventana <- 6
+PARAM$Tendencias1$tendencia <- TRUE
+PARAM$Tendencias1$minimo <- FALSE
+PARAM$Tendencias1$maximo <- FALSE
+PARAM$Tendencias1$promedio <- TRUE
+PARAM$Tendencias1$ratioavg <- FALSE
+PARAM$Tendencias1$ratiomax <- FALSE
 
 
 PARAM$RandomForest$run <- TRUE
-PARAM$RandomForest$num.trees <- 66
-PARAM$RandomForest$max.depth <- 6
-PARAM$RandomForest$min.node.size <- 666
-PARAM$RandomForest$mtry <- 66
+PARAM$RandomForest$num.trees <- 20
+PARAM$RandomForest$max.depth <- 4
+PARAM$RandomForest$min.node.size <- 2500
+PARAM$RandomForest$mtry <- 80
 PARAM$RandomForest$semilla <- 666667 # cambiar por la propia semilla
 
 
@@ -393,15 +393,15 @@ CanaritosAsesinos <- function(
     seed = canaritos_semilla,
     max_depth = -1, # -1 significa no limitar,  por ahora lo dejo fijo
     min_gain_to_split = 0.0, # por ahora, lo dejo fijo
-    lambda_l1 = 0.1, # por ahora, lo dejo fijo
-    lambda_l2 = 0.1, # por ahora, lo dejo fijo
-    max_bin = 66, # por ahora, lo dejo fijo
+    lambda_l1 = 0.0, # por ahora, lo dejo fijo
+    lambda_l2 = 0.0, # por ahora, lo dejo fijo
+    max_bin = 31, # por ahora, lo dejo fijo
     num_iterations = 9999, # un numero grande, lo limita early_stopping_rounds
     force_row_wise = TRUE, # para que los alumnos no se atemoricen con  warning
     learning_rate = 0.065,
     feature_fraction = 1.0, # lo seteo en 1
-    min_data_in_leaf = 520,
-    num_leaves = 66,
+    min_data_in_leaf = 260,
+    num_leaves = 60,
     early_stopping_rounds = 200,
     num_threads = 1
   )
